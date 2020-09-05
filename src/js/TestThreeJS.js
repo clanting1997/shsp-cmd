@@ -1,5 +1,4 @@
-
-
+import * as THREE from 'three';
 class TestThreeJS {
     constructor($TestThreeJS) {
         this.$testThreeJS = $TestThreeJS;
@@ -62,14 +61,14 @@ class TestThreeJS {
         var geometry = new THREE.BoxGeometry(1, 1, 1), // x, y, z
             material = new THREE.MeshLambertMaterial({color: 0xF7F7F7 });
 
-        meshX = -10;
+        //meshX = -10;
         for(var i=0; i<15; i++) {
             var mesh = new THREE.Mesh(geometry, material);
             mesh.position.x = (Math.random() - 0.5) * 10;
             mesh.position.y = (Math.random() - 0.5) * 10;
             mesh.position.z = (Math.random() - 0.5) * 10;
             scene.add(mesh);
-            meshX += 1;
+            //meshX += 1;
         }
 
         var light = new THREE.PointLight(0xFFFFFF,1, 1000);// color, intensity, distance - a light that gets emitted from a single point in all directions
