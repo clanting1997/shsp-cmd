@@ -7,11 +7,15 @@ import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
 class Canvas {
     constructor($Canvas) {
         this.$canvas = $Canvas;
+        this.$question = this.$canvas.find('.question-01');
 
         this.listener();
     }
 
     listener() {
+
+        const question = this.$question;
+
         var camera, scene, raycaster, renderer, stats;
 
         var mouse = new THREE.Vector2(), INTERSECTED;
@@ -21,6 +25,8 @@ class Canvas {
         animate();
 
         function init() {
+            const _this = $(this);
+
 
             camera = new CinematicCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
             camera.setLens( 5 );
@@ -126,6 +132,7 @@ class Canvas {
         }
 
         function onWindowResize() {
+            const _this = $(this);
 
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -135,11 +142,15 @@ class Canvas {
         }
 
         function onDocumentMouseMove( event ) {
+            const _this = $(this);
 
             event.preventDefault();
 
             mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
             mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+            question.toggle();
+            console.log(question);
 
         }
 
