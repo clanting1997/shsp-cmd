@@ -1,0 +1,41 @@
+body {
+  background: $white;
+  color: $white;
+}
+
+a {
+  color: #08f;
+}
+
+.canvas {
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  position: fixed;
+  width: 100vw;
+
+  .question {
+    height: 50%;
+    width: 50%;
+
+    &.question-01 {
+      display: none;
+    }
+
+    .question-background, .question-content {
+      height: 50%;
+      position: fixed;
+      width: 50%;
+    }
+
+    .question-background {
+      background: rgba(255, 255, 255, 0.75);
+      z-index: 1;
+    }
+
+    .question-content {
+      color: $blue;
+      z-index: 2;
+    }
+  }
+}
