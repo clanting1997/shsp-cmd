@@ -1,14 +1,13 @@
 import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
-
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
 
 class Canvas {
     constructor($Canvas) {
         this.$canvas = $Canvas;
         this.$question = this.$canvas.find('.question-01');
-
         this.listener();
     }
 
@@ -42,18 +41,44 @@ class Canvas {
             scene.add( light );
 
             var geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+            
+            //Import glb
+            var loader = new GLTFLoader();
 
-            for ( var i = 0; i < 1500; i ++ ) {
+            for ( var i = 0; i < 2; i ++ ) {
+            // Load a glb resource
+            loader.load( 'src/assets/models/bank.glb', function ( glb ) {
+                    var bank = glb.scene;
 
-                var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+                    bank.scale.x = 50;
+                    bank.scale.y = 50;
+                    bank.scale.z = 50;
 
-                object.position.x = Math.random() * 800 - 400;
-                object.position.y = Math.random() * 800 - 400;
-                object.position.z = Math.random() * 800 - 400;
+                    bank.position.x = Math.random() * 800 - 400;
+                    bank.position.y = Math.random() * 800 - 400;
+                    bank.position.z = Math.random() * 800 - 400;
 
-                scene.add( object );
+                    scene.add( bank );
+                },
+                // called while loading is progressing
+                function ( xhr ) {
+                    console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+                },
+                // called when loading has errors
+                function ( error ) {
+                    console.log( 'An error happened' );
+                }
+            )};
+                
 
-            }
+           // for ( var i = 0; i < 2; i ++ ) {
+                //var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+                //object.position.x = Math.random() * 800 - 400;
+                //object.position.y = Math.random() * 800 - 400;
+                //object.position.z = Math.random() * 800 - 400;
+               // scene.add( object );
+              //  }
+            //});
 
             raycaster = new THREE.Raycaster();
 
