@@ -3,6 +3,7 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
+import { TweenMax, TimelineMax } from "gsap/all";
 
 class Canvas {
     constructor($Canvas) {
@@ -13,7 +14,8 @@ class Canvas {
 
     listener() {
 
-        const question = this.$question;
+        const canvas = this.$canvas,
+            question = this.$question;
 
         var camera, scene, raycaster, renderer, stats;
 
@@ -25,7 +27,6 @@ class Canvas {
 
         function init() {
             const _this = $(this);
-
 
             camera = new CinematicCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
             camera.setLens( 5 );
@@ -40,8 +41,6 @@ class Canvas {
             light.position.set( 1, 1, 1 ).normalize();
             scene.add( light );
 
-            var geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
-            
             //Import glb
             var loader = new GLTFLoader();
 
@@ -69,16 +68,8 @@ class Canvas {
                     console.log( 'An error happened' );
                 }
             )};
-                
 
-           // for ( var i = 0; i < 2; i ++ ) {
-                //var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
-                //object.position.x = Math.random() * 800 - 400;
-                //object.position.y = Math.random() * 800 - 400;
-                //object.position.z = Math.random() * 800 - 400;
-               // scene.add( object );
-              //  }
-            //});
+            // three js example
 
             raycaster = new THREE.Raycaster();
 
@@ -93,6 +84,9 @@ class Canvas {
             document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
             window.addEventListener( 'resize', onWindowResize, false );
+
+            // click example
+
 
             var effectController = {
 
@@ -156,6 +150,13 @@ class Canvas {
 
         }
 
+        function onElementClick( event ) {
+            const _this = $(this);
+            event.preventDefault();
+            question.toggle();
+            console.log(question);
+        }
+
         function onWindowResize() {
             const _this = $(this);
 
@@ -166,6 +167,7 @@ class Canvas {
 
         }
 
+
         function onDocumentMouseMove( event ) {
             const _this = $(this);
 
@@ -174,8 +176,25 @@ class Canvas {
             mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
             mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
-            question.toggle();
-            console.log(question);
+
+            raycaster.setFromCamera( mouse, camera );
+
+
+            var intersects = raycaster.intersectObjects( scene.children, true );
+
+            for(var i = 0; i < intersects.length; i++) {
+                this.tl = new TimelineMax();
+                this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
+                this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut });
+                this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut });
+                this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5");
+            }
+
+            console.log(intersects);
+
+
+            // question.toggle();
+            // console.log(question);
 
         }
 
