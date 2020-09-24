@@ -12,6 +12,7 @@ window.$ = window.jQuery = $;
 
 $(function() {
     test();
-    Guru();
     Canvas();
+    Guru();
+
 });

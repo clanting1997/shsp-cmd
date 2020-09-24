@@ -4,6 +4,7 @@ import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
 import { TweenMax, TimelineMax } from "gsap/all";
+import {AmbientLight} from "three";
 
 class Canvas {
     constructor($Canvas) {
@@ -27,6 +28,8 @@ class Canvas {
 
         function init() {
             const _this = $(this);
+
+            var array_buffer = null;
 
             camera = new CinematicCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
             camera.setLens( 5 );
@@ -58,6 +61,8 @@ class Canvas {
                     bank.position.z = Math.random() * 800 - 400;
 
                     scene.add( bank );
+
+
                 },
                 // called while loading is progressing
                 function ( xhr ) {
@@ -68,6 +73,15 @@ class Canvas {
                     console.log( 'An error happened' );
                 }
             )};
+
+            // loader.parse(array_buffer, '', gltf => {
+            //     scene.add(gltf.scene);
+            //     gltf.scene.name = "Name of Glb File";
+            //     gltf.scene.scale.set(5, 5, 5);
+            //     renderer.render(this.scene, this.camera);
+            // }, error => {
+            //     console.log(error);
+            // });
 
             // three js example
 
@@ -85,8 +99,27 @@ class Canvas {
 
             window.addEventListener( 'resize', onWindowResize, false );
 
-            // click example
+            console.log(glb);
 
+            const onMouseClick = (event) => {
+                event.preventDefault();
+                // calculate mouse position in normalized device coordinates
+                // (-1 to +1) for both components
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+                // update the picking ray with the camera and mouse position
+                raycaster.setFromCamera( mouse, camera );
+                this.intersects = raycaster.intersectObjects( gltfobject, true );
+
+                this.intersects.map((rayobject) => {
+                    if (rayobject.object.name.length > 0 ) {
+                        console.log(rayobject.object.name)
+                    }
+                })
+            }
+
+            window.addEventListener( 'mousedown', onMouseClick, false);
+            // renderer.domElement.addEventListener('click', onClick, false);
 
             var effectController = {
 
@@ -150,6 +183,24 @@ class Canvas {
 
         }
 
+        function onClick( event ) {
+            event.preventDefault();
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            var intersects = raycaster.intersectObjects(scene.children, true);
+            console.log(intersects);
+
+            if (intersects.length > 0) {
+
+                console.log('Intersection:', intersects[0]);
+
+            }
+        }
+
         function onElementClick( event ) {
             const _this = $(this);
             event.preventDefault();
@@ -177,20 +228,19 @@ class Canvas {
             mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 
-            raycaster.setFromCamera( mouse, camera );
+            // raycaster.setFromCamera( mouse, camera );
 
-
-            var intersects = raycaster.intersectObjects( scene.children, true );
-
-            for(var i = 0; i < intersects.length; i++) {
-                this.tl = new TimelineMax();
-                this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
-                this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut });
-                this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut });
-                this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5");
-            }
-
-            console.log(intersects);
+            // var intersects = raycaster.intersectObjects( scene.children, true );
+            //
+            // for(var i = 0; i < intersects.length; i++) {
+            //     this.tl = new TimelineMax();
+            //     this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
+            //     this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut });
+            //     this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut });
+            //     this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5");
+            // }
+            //
+            // console.log(intersects);
 
 
             // question.toggle();
@@ -271,5 +321,6 @@ class Canvas {
 export default(() => {
     $('.canvas').each(function() {
         new Canvas($(this));
-    })
+    });
+
 })
