@@ -3,7 +3,7 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
-import { TweenMax, TimelineMax } from "gsap/all";
+// import { TweenMax, TimelineMax } from "gsap/all";
 import {AmbientLight} from "three";
 
 class Canvas {
@@ -22,7 +22,7 @@ class Canvas {
 
         var mouse = new THREE.Vector2(), INTERSECTED;
         var radius = 100, theta = 0;
-
+        var objects = [];
         init();
         animate();
 
@@ -47,10 +47,10 @@ class Canvas {
             //Import glb
             var loader = new GLTFLoader();
 
-            for ( var i = 0; i < 2; i ++ ) {
-            // Load a glb resource
-            loader.load( 'src/assets/models/bank.glb', function ( glb ) {
-                    var bank = glb.scene;
+            // Hier voegen wij een model toe
+            loader.load( 'src/assets/models/bank.glb', function ( object ) {
+                    var bank = object.scene;
+                    var bank2 = object.scene;
 
                     bank.scale.x = 50;
                     bank.scale.y = 50;
@@ -60,9 +60,11 @@ class Canvas {
                     bank.position.y = Math.random() * 800 - 400;
                     bank.position.z = Math.random() * 800 - 400;
 
-                    scene.add( bank );
-
-
+                    scene.add( bank);
+                    scene.add(bank2);
+                    objects.push(bank);
+                    objects.push(bank2);
+                    console.log(objects);
                 },
                 // called while loading is progressing
                 function ( xhr ) {
@@ -72,7 +74,7 @@ class Canvas {
                 function ( error ) {
                     console.log( 'An error happened' );
                 }
-            )};
+            );
 
             // loader.parse(array_buffer, '', gltf => {
             //     scene.add(gltf.scene);
@@ -84,8 +86,8 @@ class Canvas {
             // });
 
             // three js example
-
             raycaster = new THREE.Raycaster();
+
 
             renderer = new THREE.WebGLRenderer( { antialias: true } );
             renderer.setPixelRatio( window.devicePixelRatio );
@@ -99,7 +101,7 @@ class Canvas {
 
             window.addEventListener( 'resize', onWindowResize, false );
 
-            console.log(glb);
+            //console.log(glb);
 
             const onMouseClick = (event) => {
                 event.preventDefault();
@@ -109,7 +111,7 @@ class Canvas {
                 mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera( mouse, camera );
-                this.intersects = raycaster.intersectObjects( gltfobject, true );
+                this.intersects = raycaster.intersectObjects( objects[0].children, true );
 
                 this.intersects.map((rayobject) => {
                     if (rayobject.object.name.length > 0 ) {
@@ -183,23 +185,23 @@ class Canvas {
 
         }
 
-        function onClick( event ) {
-            event.preventDefault();
+        //function onClick( event ) {
+        //    event.preventDefault();
 
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        //    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        //    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            raycaster.setFromCamera(mouse, camera);
+        //    raycaster.setFromCamera(mouse, camera);
 
-            var intersects = raycaster.intersectObjects(scene.children, true);
-            console.log(intersects);
+        //    var intersects = raycaster.intersectObjects(scene.children, true);
+        //    console.log(intersects);
 
-            if (intersects.length > 0) {
+        //    if (intersects.length > 0) {
 
-                console.log('Intersection:', intersects[0]);
+        //        console.log('Intersection:', intersects[0]);
 
-            }
-        }
+        //    }
+        //}
 
         function onElementClick( event ) {
             const _this = $(this);
