@@ -48,9 +48,8 @@ class Canvas {
             var loader = new GLTFLoader();
 
             // Hier voegen wij een model toe
-            loader.load( 'src/assets/models/bank.glb', function ( object ) {
+            loader.load( 'src/assets/models/bank-merged.glb', function ( object ) {
                     var bank = object.scene;
-                    var bank2 = object.scene;
 
                     bank.scale.x = 50;
                     bank.scale.y = 50;
@@ -61,10 +60,7 @@ class Canvas {
                     bank.position.z = Math.random() * 800 - 400;
 
                     scene.add( bank);
-                    scene.add(bank2);
                     objects.push(bank);
-                    objects.push(bank2);
-                    console.log(objects);
                 },
                 // called while loading is progressing
                 function ( xhr ) {
@@ -102,6 +98,7 @@ class Canvas {
             window.addEventListener( 'resize', onWindowResize, false );
 
             //console.log(glb);
+            console.log(objects);
 
             const onMouseClick = (event) => {
                 event.preventDefault();
@@ -111,9 +108,9 @@ class Canvas {
                 mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera( mouse, camera );
-                this.intersects = raycaster.intersectObjects( objects[0].children, true );
+                var intersects = raycaster.intersectObjects( objects, true );
 
-                this.intersects.map((rayobject) => {
+                intersects.map((rayobject) => {
                     if (rayobject.object.name.length > 0 ) {
                         console.log(rayobject.object.name)
                     }
