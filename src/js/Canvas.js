@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
 // import { TweenMax, TimelineMax } from "gsap/all";
 import {AmbientLight} from "three";
+import Questions from "././Questions";
 
 class Canvas {
     constructor($Canvas) {
@@ -14,7 +15,6 @@ class Canvas {
     }
 
     listener() {
-
         const canvas = this.$canvas,
             question = this.$question;
 
@@ -48,19 +48,19 @@ class Canvas {
             var loader = new GLTFLoader();
 
             // Hier voegen wij een model toe
-            loader.load( 'src/assets/models/bank-merged.glb', function ( object ) {
-                    var bank = object.scene;
+            loader.load( 'src/assets/models/deur-merged.glb', function ( object ) {
+                    var deur = object.scene;
 
-                    bank.scale.x = 50;
-                    bank.scale.y = 50;
-                    bank.scale.z = 50;
+                    deur.scale.x = 50;
+                    deur.scale.y = 50;
+                    deur.scale.z = 50;
 
-                    bank.position.x = Math.random() * 800 - 400;
-                    bank.position.y = Math.random() * 800 - 400;
-                    bank.position.z = Math.random() * 800 - 400;
-
-                    scene.add( bank);
-                    objects.push(bank);
+                    deur.position.x = Math.random() * 800 - 400;
+                    deur.position.y = Math.random() * 800 - 400;
+                   deur.position.z = Math.random() * 800 - 400;
+                    
+                    scene.add( deur);
+                    objects.push(deur);
                 },
                 // called while loading is progressing
                 function ( xhr ) {
@@ -71,6 +71,29 @@ class Canvas {
                     console.log( 'An error happened' );
                 }
             );
+
+            loader.load( 'src/assets/models/Douche.glb', function ( object ) {
+                var douche = object.scene;
+
+                douche.scale.x = 50;
+                douche.scale.y = 50;
+                douche.scale.z = 50;
+
+                douche.position.x = Math.random() * 800 - 400;
+                douche.position.y = Math.random() * 800 - 400;
+                douche.position.z = Math.random() * 800 - 400;
+                scene.add( douche);
+                objects.push(douche);
+            },
+            // called while loading is progressing
+            function ( xhr ) {
+                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+            },
+            // called when loading has errors
+            function ( error ) {
+                console.log( 'An error happened' );
+            }
+        );
 
             // loader.parse(array_buffer, '', gltf => {
             //     scene.add(gltf.scene);
@@ -111,8 +134,8 @@ class Canvas {
                 var intersects = raycaster.intersectObjects( objects, true );
 
                 intersects.map((rayobject) => {
-                    if (rayobject.object.name.length > 0 ) {
-                        console.log(rayobject.object.name)
+                    if (rayobject.object.name.includes("deur")) {
+                        Questions();
                     }
                 })
             }
@@ -261,9 +284,9 @@ class Canvas {
 
             theta += 0.1;
 
-            camera.position.x = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-            camera.position.y = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-            camera.position.z = radius * Math.cos( THREE.MathUtils.degToRad( theta ) );
+            //camera.position.x = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
+            //camera.position.y = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
+            //camera.position.z = radius * Math.cos( THREE.MathUtils.degToRad( theta ) );
             camera.lookAt( scene.position );
 
             camera.updateMatrixWorld();
