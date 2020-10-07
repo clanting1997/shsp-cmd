@@ -1,0 +1,18 @@
+$BeausiteClassic: 'BeausiteClassic', sans-serif;
+$BeausiteSlick: 'BeausiteSlick', sans-serif;
+
+@font-face {
+  font-family: 'BeausiteClassic';
+  font-style: normal;
+  src: url('../fonts/BeausiteClassic/BeausiteClassicTrial-Medium.woff2') format('woff2'),
+  url('../fonts/BeausiteClassic/BeausiteClassicTrial-Medium.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeausiteSlick';
+  font-style: normal;
+  src: url('../fonts/BeausiteSlick/BeausiteSlickTrial-Medium.woff2') format('woff2'),
+  url('../fonts/BeausiteSlick/BeausiteSlickTrial-Medium.woff') format('woff');
+  font-display: swap;
+}
