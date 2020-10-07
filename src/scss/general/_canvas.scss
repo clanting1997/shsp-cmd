@@ -6,12 +6,9 @@
   width: 100vw;
 
   .question {
+    display: none;
     height: 50%;
     width: 50%;
-
-    &.question-01 {
-      display: none;
-    }
 
     .question-background, .question-content {
       height: 50%;

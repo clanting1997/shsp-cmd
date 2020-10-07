@@ -10,7 +10,7 @@ import Questions from "././Questions";
 class Canvas {
     constructor($Canvas) {
         this.$canvas = $Canvas;
-        this.$question = this.$canvas.find('.question-01');
+        this.$question = this.$canvas.find('.question');
         this.listener();
     }
 
@@ -136,6 +136,12 @@ class Canvas {
                 intersects.map((rayobject) => {
                     if (rayobject.object.name.includes("deur")) {
                         Questions();
+                        question.addClass('door');
+                        question.show();
+                    } else if (rayobject.object.name.includes("douche")) {
+                        Questions();
+                        question.addClass('douche');
+                        question.show();
                     }
                 })
             }
@@ -205,31 +211,6 @@ class Canvas {
 
         }
 
-        //function onClick( event ) {
-        //    event.preventDefault();
-
-        //    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        //    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-        //    raycaster.setFromCamera(mouse, camera);
-
-        //    var intersects = raycaster.intersectObjects(scene.children, true);
-        //    console.log(intersects);
-
-        //    if (intersects.length > 0) {
-
-        //        console.log('Intersection:', intersects[0]);
-
-        //    }
-        //}
-
-        function onElementClick( event ) {
-            const _this = $(this);
-            event.preventDefault();
-            question.toggle();
-            console.log(question);
-        }
-
         function onWindowResize() {
             const _this = $(this);
 
@@ -248,26 +229,6 @@ class Canvas {
 
             mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
             mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-
-            // raycaster.setFromCamera( mouse, camera );
-
-            // var intersects = raycaster.intersectObjects( scene.children, true );
-            //
-            // for(var i = 0; i < intersects.length; i++) {
-            //     this.tl = new TimelineMax();
-            //     this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut});
-            //     this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut });
-            //     this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut });
-            //     this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5");
-            // }
-            //
-            // console.log(intersects);
-
-
-            // question.toggle();
-            // console.log(question);
-
         }
 
         function animate() {

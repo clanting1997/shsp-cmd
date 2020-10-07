@@ -3,7 +3,6 @@ import 'bootstrap';
 import './scss/main.scss';
 
 // components
-import test from "./js/test";
 import StartScreen from "./js/StartScreen";
 import Canvas from "./js/Canvas";
 import Guru from "./js/guru";
@@ -12,9 +11,7 @@ import Guru from "./js/guru";
 window.$ = window.jQuery = $;
 
 $(function() {
-    test();
     StartScreen();
     Canvas();
     Guru();
-
 });
