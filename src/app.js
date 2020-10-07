@@ -6,6 +6,7 @@ import './scss/main.scss';
 import StartScreen from "./js/StartScreen";
 import Canvas from "./js/Canvas";
 import Guru from "./js/guru";
+import Sound from './js/Sound';
 
 // globals
 window.$ = window.jQuery = $;
@@ -14,4 +15,5 @@ $(function() {
     StartScreen();
     Canvas();
     Guru();
+    Sound();
 });

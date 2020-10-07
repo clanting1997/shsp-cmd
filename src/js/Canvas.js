@@ -132,11 +132,12 @@ class Canvas {
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera( mouse, camera );
                 var intersects = raycaster.intersectObjects( objects, true );
+                console.log(intersects)
 
                 intersects.map((rayobject) => {
                     if (rayobject.object.name.includes("deur")) {
                         Questions();
-                        question.addClass('door');
+                        question.addClass('AskName')
                         question.show();
                     } else if (rayobject.object.name.includes("douche")) {
                         Questions();
