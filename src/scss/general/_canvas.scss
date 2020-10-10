@@ -8,7 +8,8 @@
 
   .question {
     display: none;
-    height: 100%;
+    height: 80vh;
+    padding-top: 20vh;
     width: 100%;
 
     .question-background, .question-content {
@@ -23,17 +24,11 @@
     }
 
     .question-content {
-      display: grid;
       line-height: 3;
       padding-left: 100px;
       padding-right: 100px;
-      place-content: center;
       text-align: center;
       z-index: 2;
-
-      .question-title {
-        font-size: 2.0rem;
-      }
     }
   }
 }

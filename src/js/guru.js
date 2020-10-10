@@ -23,6 +23,7 @@ class Guru {
         var guru = new THREE.Mesh( geometry, material );
         scene.add( guru );
         guru.scale.set(2,2,2);
+        guru.material.transparent = true;
 
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize( Width, Height );
@@ -33,7 +34,7 @@ class Guru {
         camera.position.set( 0, 20, 5 );
         controls.update();
 
-       animate();
+        animate();
         function animate() {
             requestAnimationFrame( animate );
             controls.update();
@@ -42,36 +43,43 @@ class Guru {
 
 
         $.updateGuru = function () {
-            let guruWidth = guru.geometry.scale.x, // social
-                guruHeight = guru.geometry.scale.y, // society
-                guruRadius = guru.geometry.parameters.widthSegments, // health
-                guruSize = guru.geometry.parameters.radius; // finance
             const answerDoorOne = $("input[name='door-1']:checked"),
                 environment = answerDoorOne.data("environment"),
                 health = answerDoorOne.data("health"),
                 finance = answerDoorOne.data("finance"),
                 society = answerDoorOne.data("society"),
                 social = answerDoorOne.data("social");
+            let guruRotation = environment * 0.01, // environment
+                guruOpacity = guru.material.opacity, // health
+                guruHeight = guru.scale.y, // society
+                guruWidth = guru.scale.x; // social
 
-            console.log('environment: ' + environment);
-            console.log('health: ' + health);
-            console.log('finance: ' + finance);
-            console.log('society: ' + society);
-            console.log('social: ' + social);
+            controls.update();
 
-            console.log('updating...');
+            // environment
 
-            guru.geometry.scale.x = guruWidth + social;
-            guru.geometry.scale.y = guruHeight + society;
-            // guru.geometry.parameters.widthSegments = guru.geometry.parameters.heightSegments = guruRadius - health * 5;
-            guru.rotation.set(environment, environment, environment);
-            guru.geometry.parameters.radius = guruSize - finance;
+            guruRotate();
+            function guruRotate() {
+                requestAnimationFrame(guruRotate);
+                guru.rotation.x += guruRotation;
+                guru.rotation.y += guruRotation;
+                controls.update();
+                renderer.render( scene, camera );
+            }
 
-            // guru.geometry.parameters.widthSegments = guru.geometry.parameters.heightSegments = 2;
 
-            // console.log(guru.rotation.set(3, 3, 3));
-            console.log(guru.rotation);
-            console.log(guru.geometry.parameters);
+            // health
+
+            guru.material.opacity  = guruOpacity - health * 0.1;
+
+
+            // finance + society + social
+
+            guruHeight = guruHeight - society * 0.1;
+            guruWidth = guruWidth - social * 0.1;
+            guru.scale.set(guruWidth + finance, guruHeight + finance, guru.scale.z + finance);
+
+            renderer.render(scene, camera);
 
         }
 
