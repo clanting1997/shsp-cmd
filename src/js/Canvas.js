@@ -111,7 +111,7 @@ class Canvas {
             renderer = new THREE.WebGLRenderer( { antialias: true } );
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
-            document.body.appendChild( renderer.domElement );
+            canvas[0].appendChild( renderer.domElement );
 
             stats = new Stats();
             document.body.appendChild( stats.dom );

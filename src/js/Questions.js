@@ -1,5 +1,6 @@
 import {arrayMax} from "three/src/utils";
 import Sound from "./Sound";
+import Guru from "./guru";
 
 class Questions {
     constructor($Questions) {
@@ -38,11 +39,29 @@ class Questions {
                 $(function(){
                     $(".option").submit(function(e) {
                         name = $("#name").val();
-                        console.log(name);
-                        question.removeClass('AskName');
-                        question.addClass('AskCity');
-                        questionContent.empty();
-                        askCity();
+
+                        if (name === "" || name === undefined || name === null) {
+                            AskName = "You won’t tell me your name? Please choose one of these."
+                            answersContent.empty().append("<form class='option-two'><div><input type='radio' name='name' id='sir-lancelot' value='Sir Lancelot' contenteditable=\"true\"><label for='sir-lancelot'>Sir Lancelot</label></div><div><input type='radio' name='name' id='henry' value='Henry' contenteditable=\"true\"><label for='henry'>Henry</label></div><div><input type='radio' name='name' id='the-pope' value='The Pope' contenteditable=\"true\"><label for='the-pope'>The Pope</label></div><div><input type='radio' name='name' id='beyonce' value='Beyonce' contenteditable=\"true\"><label for='beyonce'>Beyonce</label></div><div><input type='radio' name='name' id='god-knows' value='God Knows' contenteditable=\"true\"><label for='god-knows'>God knows</label></div><input type='submit' value='> Next Question'></form>")
+
+                            $(function () {
+                                $('.option-two').submit(function (e) {
+                                    const name = $("input[name='name']:checked").val();
+                                    // Guru();
+                                    question.removeClass('AskName');
+                                    question.addClass('AskCity');
+                                    questionContent.empty();
+                                    askCity();
+                                });
+                            });
+                        } else {
+                            // Guru();
+                            console.log(name);
+                            question.removeClass('AskName');
+                            question.addClass('AskCity');
+                            questionContent.empty();
+                            askCity();
+                        }
                     });
                 });
             }
