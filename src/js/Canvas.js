@@ -117,7 +117,6 @@ class Canvas {
             document.body.appendChild( stats.dom );
 
             document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
             window.addEventListener( 'resize', onWindowResize, false );
 
             //console.log(glb);
@@ -138,6 +137,7 @@ class Canvas {
                         Questions();
                         question.addClass('AskName')
                         question.show();
+                        console.log($(this));
                     } else if (rayobject.object.name.includes("douche")) {
                         Questions();
                         question.addClass('douche');
@@ -147,6 +147,7 @@ class Canvas {
             }
 
             window.addEventListener( 'mousedown', onMouseClick, true);
+
             // renderer.domElement.addEventListener('click', onClick, false);
 
             var effectController = {

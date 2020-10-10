@@ -137,24 +137,26 @@ class Questions {
                 })
             }
 
-                    //maak een array aan met de vraag
-                    var DoorQuestions = {
-                        //Milieu - Gezondheid - Fininancien - Maatschappelijk - Sociaal
-                        Question: ["Hello, " + name + " good to see you here. I wished I could shake your hand in person, but alas, we all know, no handshaking and for now you have to do with me, your virtual host. So tell me, I suppose we can meet up life again next year, how would you travel to Eindhoven?"],
-                        Answers: [{
-                            0: ['Plane', 'You come from far, I guess?', 1, 1, 0, 0, 0],
-                        }, {
-                            1: ['Train', 'I guess you knew most DDW locations are close to a train station', 2, 1, 0, 0, 0],
-                        }, {
-                            2: ['Bicycle or on foot', 'I guess you live close?', 2, 2, 0, 0, 0],
-                        }, {
-                            3: ['Car or Motorcycle', 'You might have a parking problem', 1, 1, 0, 0, 0],
-                        }, {
-                            4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0,0,0,0, 0],
-                        }]
-                    };
+
                     
         function askDoor(name) {
+            //maak een array aan met de vraag
+            var DoorQuestions = {
+                //Milieu - Gezondheid - Fininancien - Maatschappelijk - Sociaal
+                Question: ["Hello, " + name + " good to see you here. I wished I could shake your hand in person, but alas, we all know, no handshaking and for now you have to do with me, your virtual host. So tell me, I suppose we can meet up life again next year, how would you travel to Eindhoven?"],
+                Answers: [{
+                    0: ['Plane', 'You come from far, I guess?', 1, 1, 0, 0, 0],
+                }, {
+                    1: ['Train', 'I guess you knew most DDW locations are close to a train station', 2, 1, 0, 0, 0],
+                }, {
+                    2: ['Bicycle or on foot', 'I guess you live close?', 2, 2, 0, 0, 0],
+                }, {
+                    3: ['Car or Motorcycle', 'You might have a parking problem', 1, 1, 0, 0, 0],
+                }, {
+                    4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0,0,0,0, 0],
+                }]
+            };
+
             if (question.hasClass('door')) {
                 const answers = DoorQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions.Question + "</div><div class='answers'></div>");
