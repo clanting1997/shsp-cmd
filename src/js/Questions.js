@@ -32,7 +32,8 @@ class Questions {
                 const answersContent = questionContent.find('.answers');
 
                 //voeg formulier toe
-                answersContent.append("<form class='option'><input type='text' value='John' id='name'></label><br> <input type='submit' value='Submit'> </form>")
+                answersContent.append("<form class='option'><input type='text' placeholder='name' id='name' contenteditable=\"true\"></label><br> <input type='submit' value='> Next Question'></form>");
+
 
                 $(function(){
                     $(".option").submit(function(e) {
@@ -99,7 +100,7 @@ class Questions {
                         health = answer[3],
                         finance = answer[4],
                         social = answer[5];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='gender-1' value='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='gender-1' id='"+transport+"' value='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
                     })
                 answersContent.append("<button id='geefgender'> Continue </button>");
 
@@ -144,7 +145,7 @@ class Questions {
                         health = answer[3],
                         finance = answer[4],
                         social = answer[5];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-1' value='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-1' value='"+transport+"' id='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
                 
                 });
 

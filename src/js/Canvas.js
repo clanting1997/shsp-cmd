@@ -124,7 +124,6 @@ class Canvas {
             console.log(objects);
 
             const onMouseClick = (event) => {
-                event.preventDefault();
                 // calculate mouse position in normalized device coordinates
                 // (-1 to +1) for both components
                 mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -147,7 +146,7 @@ class Canvas {
                 })
             }
 
-            window.addEventListener( 'mousedown', onMouseClick, false);
+            window.addEventListener( 'mousedown', onMouseClick, true);
             // renderer.domElement.addEventListener('click', onClick, false);
 
             var effectController = {
