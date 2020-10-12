@@ -404,14 +404,26 @@ class Questions {
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
                 $('#transportation').click(function() {
-                    const transportation = $("input[name='door-1']:checked").val();
-                    console.log(transportation);
+                    const transportation = $("input[name='door-1']:checked"),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
                     questionContent.empty();
                     question.removeClass('door');
                     question.addClass('door2');
                     askDoor(name);
                     if (transportation != undefined) {
+                        $('#transportation').attr({
+                            "data-environment":environment,
+                            "data-health":health,
+                            "data-finance":finance,
+                            "data-society":society,
+                            "data-social":social,
+                        })
                         $.updateGuru();
+
                     }
 
                 });

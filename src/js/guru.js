@@ -43,18 +43,19 @@ class Guru {
 
 
         $.updateGuru = function () {
-            const answerDoorOne = $("input[name='door-1']:checked"),
-                environment = answerDoorOne.data("environment"),
-                health = answerDoorOne.data("health"),
-                finance = answerDoorOne.data("finance"),
-                society = answerDoorOne.data("society"),
-                social = answerDoorOne.data("social");
+            const answer = $("#transportation"),
+                environment = answer.data("environment"),
+                health = answer.data("health"),
+                finance = answer.data("finance"),
+                society = answer.data("society"),
+                social = answer.data("social");
             let guruRotation = environment * 0.01, // environment
                 guruOpacity = guru.material.opacity, // health
                 guruHeight = guru.scale.y, // society
                 guruWidth = guru.scale.x; // social
 
             controls.update();
+
 
             // environment
 
@@ -80,7 +81,6 @@ class Guru {
             guru.scale.set(guruWidth + finance, guruHeight + finance, guru.scale.z + finance);
 
             renderer.render(scene, camera);
-
         }
 
 
