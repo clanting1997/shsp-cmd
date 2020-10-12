@@ -50,7 +50,7 @@ class Canvas {
 
             scene.add( new THREE.AmbientLight( 0xffffff, 1.0 ) );
 
-            var light = new THREE.DirectionalLight( 0xffffff, 0,35 );
+            var light = new THREE.DirectionalLight( 0xffffff, 0.35 );
             light.position.set( 1, 1, 1 ).normalize();
             scene.add( light );
 

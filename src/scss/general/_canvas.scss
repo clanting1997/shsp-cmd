@@ -13,18 +13,21 @@
     width: 100%;
 
     .question-background, .question-content {
-      height: 100%;
       position: fixed;
       width: 100%;
     }
 
     .question-background {
       background: rgba(255, 255, 255, 0.95);
+      height: 100%;
       z-index: 1;
     }
 
     .question-content {
+      height: 80vh;
       line-height: 3;
+      overflow: scroll;
+      padding-bottom: 20vh;
       padding-left: 100px;
       padding-right: 100px;
       text-align: center;

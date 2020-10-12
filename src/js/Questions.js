@@ -405,6 +405,7 @@ class Questions {
 
                 $('#transportation').click(function() {
                     const transportation = $("input[name='door-1']:checked"),
+                        transportationVal = transportation.val(),
                         environment = transportation.data("environment"),
                         health = transportation.data("health"),
                         finance = transportation.data("finance"),
@@ -414,7 +415,7 @@ class Questions {
                     question.removeClass('door');
                     question.addClass('door2');
                     askDoor(name);
-                    if (transportation != undefined) {
+                    if (transportationVal != undefined) {
                         $('#transportation').attr({
                             "data-environment":environment,
                             "data-health":health,
@@ -422,13 +423,9 @@ class Questions {
                             "data-society":society,
                             "data-social":social,
                         })
-                        $.updateGuru();
-
+                        $.firstGuru();
                     }
-
                 });
-
-
                 question.removeClass('door');
             } else if (question.hasClass('door2')) {
                 const answers = DoorQuestions2.Answers;
@@ -448,14 +445,26 @@ class Questions {
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
                 $('#transportation').click(function() {
-                    const transportation = $("input[name='door-2']:checked").val();
-                    console.log(transportation);
+                    const transportation = $("input[name='door-2']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
                     questionContent.empty();
                     question.removeClass('door2');
                     question.addClass('door3');
                     askDoor(name);
-                    if (transportation != undefined) {
-                        $.updateGuru();
+                    if (transportationVal != undefined) {
+                        $('#transportation').attr({
+                            "data-environment":environment,
+                            "data-health":health,
+                            "data-finance":finance,
+                            "data-society":society,
+                            "data-social":social,
+                        });
+                        $.updateData();
                     }
                 });
             } else if (question.hasClass('door3')) {
@@ -471,17 +480,30 @@ class Questions {
                         finance = answer[4],
                         society = answer[5],
                         social = answer[6];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-1' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-3' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
                 });
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
                 $('#transportation').click(function() {
-                    const transportation = $("input[name='door-1']:checked").val();
+                    const transportation = $("input[name='door-3']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
                     console.log(transportation);
                     question.removeClass('door3');
                     questionContent.empty();
-                    if (transportation != undefined) {
-                        $.updateGuru();
+                    if (transportationVal != undefined) {
+                        $('#transportation').attr({
+                            "data-environment":environment,
+                            "data-health":health,
+                            "data-finance":finance,
+                            "data-society":society,
+                            "data-social":social,
+                        });
+                        $.updateData();
                     }
                 });
             }

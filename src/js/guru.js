@@ -9,7 +9,8 @@ class Guru {
     }
 
     listener() {
-        const guruCanvas = this.$Guru;
+        const _this = this,
+            guruCanvas = this.$Guru;
         var Height = window.innerHeight/5;
         var Width = window.innerWidth/5;
 
@@ -41,49 +42,93 @@ class Guru {
             renderer.render( scene, camera );
         }
 
+        var answerData;
 
-        $.updateGuru = function () {
+        $.firstGuru = function () {
             const answer = $("#transportation"),
                 environment = answer.data("environment"),
                 health = answer.data("health"),
                 finance = answer.data("finance"),
                 society = answer.data("society"),
                 social = answer.data("social");
-            let guruRotation = environment * 0.01, // environment
-                guruOpacity = guru.material.opacity, // health
-                guruHeight = guru.scale.y, // society
-                guruWidth = guru.scale.x; // social
 
-            controls.update();
+            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
 
+            // create data array
 
-            // environment
-
-            guruRotate();
-            function guruRotate() {
-                requestAnimationFrame(guruRotate);
-                guru.rotation.x += guruRotation;
-                guru.rotation.y += guruRotation;
-                controls.update();
-                renderer.render( scene, camera );
+            answerData = {
+                'environment': environment,
+                'health': health,
+                'finance': finance,
+                'society': society,
+                'social':social
             }
 
+            console.log(answerData);
+        }
 
-            // health
+        $.updateData = function () {
+            const answer = $("#transportation");
 
-            guru.material.opacity  = guruOpacity - health * 0.1;
+
+            // migrate old + new data
+
+            let environment = answer.data("environment") + answerData.environment,
+                health = answer.data("health") + answerData.health,
+                finance = answer.data("finance") + answerData.finance,
+                society = answer.data("society") + answerData.society,
+                social = answer.data("social") + answerData.social;
+
+            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
+
+            // update array
+
+            answerData = {
+                'environment': environment,
+                'health': health,
+                'finance': finance,
+                'society': society,
+                'social':social
+            }
+
+            console.log(answerData);
+        }
+
+    }
 
 
-            // finance + society + social
+    updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera)  {
+        let guruRotation = environment * 0.01, // environment
+            guruOpacity = guru.material.opacity, // health
+            guruHeight = guru.scale.y, // society
+            guruWidth = guru.scale.x; // social
 
-            guruHeight = guruHeight - society * 0.1;
-            guruWidth = guruWidth - social * 0.1;
-            guru.scale.set(guruWidth + finance, guruHeight + finance, guru.scale.z + finance);
+        controls.update();
 
-            renderer.render(scene, camera);
+        // environment
+
+        guruRotate();
+        function guruRotate() {
+            requestAnimationFrame(guruRotate);
+            guru.rotation.x += guruRotation;
+            guru.rotation.y += guruRotation;
+            controls.update();
+            renderer.render( scene, camera );
         }
 
 
+        // health
+
+        guru.material.opacity  = guruOpacity - health * 0.1;
+
+
+        // finance + society + social
+
+        guruHeight = guruHeight - society * 0.1;
+        guruWidth = guruWidth - social * 0.1;
+        guru.scale.set(guruWidth + finance, guruHeight + finance, guru.scale.z + finance);
+
+        renderer.render(scene, camera);
     }
 };
 

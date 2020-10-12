@@ -3,10 +3,18 @@ body {
   color: $black;
   height: 100vh;
   font-family: $BeausiteClassic;
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   line-height: 2;
   overflow: hidden;
   width: 100vw;
+
+  @media($lg) {
+    font-size: 1.0rem;
+  }
+
+  @media($xl) {
+    font-size: 1.5rem;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
