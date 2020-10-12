@@ -11,7 +11,6 @@ listener() {
         audioElement.setAttribute('src', '././src/assets/sounds/BM.mp3');
             audioElement.play();
             $("#status").text("Status: Playing");
-            console.log('speel audio')
         };
     }
 }   
