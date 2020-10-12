@@ -12,133 +12,136 @@ class Questions {
 
     listener() {
         const question = this.$Questions,
-        questionContent = this.$QuestionsContent;
+            questionContent = this.$QuestionsContent;
         var name = this.$name;
         var empty = "empty";
-            var GenderQuestion = {
-                Question: "Wait... wait, just one more question! I almost forgot, but please tell me, are you, or do feel you more...",
-                Answers: [{
-                    0: ['Male', 'empty', 0, 0, 0, 1],
-                }, {
-                    1: ['Female', 'empty', 0, 0, 0, 1]
-                }]
-            }
+        var GenderQuestion = {
+            Question: "Wait... wait, just one more question! I almost forgot, but please tell me, are you, or do feel you more...",
+            Answers: [{
+                0: ['Male', 'empty', 0, 0, 0, 1, 0],
+            }, {
+                1: ['Female', 'empty', 0, 0, 0, 1, 0],
+            }]
+        }
 
-            //als de persoon nog niets geklikt heeft
-            if (question.hasClass('AskName')) {
-                var AskName = "Who are you? Please tell me your name.";
+        //als de persoon nog niets geklikt heeft
+        if (question.hasClass('AskName')) {
+            var AskName = "Who are you? Please tell me your name.";
 
-                //voeg vraag toe
-                questionContent.append("<div class='question-title'>" + AskName + "</div><div class='answers'></div>");
-                const answersContent = questionContent.find('.answers');
+            //voeg vraag toe
+            questionContent.append("<div class='question-title'>" + AskName + "</div><div class='answers'></div>");
+            const answersContent = questionContent.find('.answers');
 
-                //voeg formulier toe
-                answersContent.append("<form class='option'><input type='text' placeholder='name' id='name' contenteditable=\"true\"></label><br> <input type='submit' value='> Next Question'></form>");
+            //voeg formulier toe
+            answersContent.append("<form class='option'><input type='text' placeholder='name' id='name' contenteditable=\"true\"></label><br> <input type='submit' value='> Next Question'></form>");
 
 
-                $(function(){
-                    $(".option").submit(function(e) {
-                        name = $("#name").val();
+            $(function () {
+                $(".option").submit(function (e) {
+                    name = $("#name").val();
 
-                        if (name === "" || name === undefined || name === null) {
-                            AskName = "You won’t tell me your name? Please choose one of these."
-                            answersContent.empty().append("<form class='option-two'><div><input type='radio' name='name' id='sir-lancelot' value='Sir Lancelot' contenteditable=\"true\"><label for='sir-lancelot'>Sir Lancelot</label></div><div><input type='radio' name='name' id='henry' value='Henry' contenteditable=\"true\"><label for='henry'>Henry</label></div><div><input type='radio' name='name' id='the-pope' value='The Pope' contenteditable=\"true\"><label for='the-pope'>The Pope</label></div><div><input type='radio' name='name' id='beyonce' value='Beyonce' contenteditable=\"true\"><label for='beyonce'>Beyonce</label></div><div><input type='radio' name='name' id='god-knows' value='God Knows' contenteditable=\"true\"><label for='god-knows'>God knows</label></div><input type='submit' value='> Next Question'></form>")
+                    if (name === "" || name === undefined || name === null) {
+                        AskName = "You won’t tell me your name? Please choose one of these."
+                        answersContent.empty().append("<form class='option-two'><div><input type='radio' name='name' id='sir-lancelot' value='Sir Lancelot' contenteditable=\"true\"><label for='sir-lancelot'>Sir Lancelot</label></div><div><input type='radio' name='name' id='henry' value='Henry' contenteditable=\"true\"><label for='henry'>Henry</label></div><div><input type='radio' name='name' id='the-pope' value='The Pope' contenteditable=\"true\"><label for='the-pope'>The Pope</label></div><div><input type='radio' name='name' id='beyonce' value='Beyonce' contenteditable=\"true\"><label for='beyonce'>Beyonce</label></div><div><input type='radio' name='name' id='god-knows' value='God Knows' contenteditable=\"true\"><label for='god-knows'>God knows</label></div><input type='submit' value='> Next Question'></form>")
 
-                            $(function () {
-                                $('.option-two').submit(function (e) {
-                                    const name = $("input[name='name']:checked").val();
-                                    // Guru();
-                                    question.removeClass('AskName');
-                                    question.addClass('AskCity');
-                                    questionContent.empty();
-                                    askCity(name);
-                                });
+                        $(function () {
+                            $('.option-two').submit(function (e) {
+                                const name = $("input[name='name']:checked").val();
+                                // Guru();
+                                question.removeClass('AskName');
+                                question.addClass('AskCity');
+                                questionContent.empty();
+                                askCity(name);
                             });
-                        } else {
-                            // Guru();
-                            console.log(name);
-                            question.removeClass('AskName');
-                            question.addClass('AskCity');
-                            questionContent.empty();
-                            askCity(name);
-                        }
-                    });
-                });
-            }
-
-                function askCity(name) {
-                    var AskCity = "You want to enter? No not yet, I have a few more questions.<br> First, tell me where you live. <br> Dit zou een invulveld worden, maar dit is stiekem waardevol";
-
-                    //voeg vraag toe
-                    questionContent.append("<div class='question-title'>" + AskCity + "</div><div class='answers'></div>");
-                    const answersContent = questionContent.find('.answers');
-                    
-                    //voeg formulier toe
-                    answersContent.append("<button id='geefgeo'>Give Location</button> <br> <button id='geengeo'>No way!</button>")
-                    
-                    //klik op give location
-                    $("#geefgeo").click(function(){
-                        function getLocation() {
-                            if (navigator.geolocation) {
-                              navigator.geolocation.getCurrentPosition(savePosition);
-                            } else { 
-                              x.innerHTML = "Geolocation is not supported by this browser.";
-                            }
-                          }
-                          getLocation();
-
-                          function savePosition(position) {
-                            var latitude = Math.round(position.coords.latitude);
-                            var longitude = Math.round(position.coords.longitude);
-                            console.log(latitude + longitude)
-                           }
-                           question.removeClass('AskCity');
-                           question.addClass('AskGender');
-                           questionContent.empty();
-                           askGender(name);
-                    }); 
-                    
-                    //klik op no way
-                    $("#geengeo").click(function(){
-                        question.removeClass('AskCity');
-                        question.addClass('AskGender');
+                        });
+                    } else {
+                        // Guru();
+                        console.log(name);
+                        question.removeClass('AskName');
+                        question.addClass('AskCity');
                         questionContent.empty();
-                        askGender(name);
-                    })
+                        askCity(name);
+                    }
+                });
+            });
+        }
+
+        function askCity(name) {
+            var AskCity = "You want to enter? No not yet, I have a few more questions.<br> First, tell me where you live. <br> Dit zou een invulveld worden, maar dit is stiekem waardevol";
+
+            //voeg vraag toe
+            questionContent.append("<div class='question-title'>" + AskCity + "</div><div class='answers'></div>");
+            const answersContent = questionContent.find('.answers');
+
+            //voeg formulier toe
+            answersContent.append("<button id='geefgeo'>Give Location</button> <br> <button id='geengeo'>No way!</button>")
+
+            //klik op give location
+            $("#geefgeo").click(function () {
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(savePosition);
+                    } else {
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                    }
                 }
 
-            function askGender(name) {
-                const answers = GenderQuestion.Answers;
-                questionContent.append("<div class='question-title'>" + GenderQuestion.Question + "</div><div class='answers'></div>");
-                const answersContent = questionContent.find('.answers');
-                $.each(answers, function (i, val) {
-                    const answer = $(this)[0][i],
+                getLocation();
+
+                function savePosition(position) {
+                    var latitude = Math.round(position.coords.latitude);
+                    var longitude = Math.round(position.coords.longitude);
+                    console.log(latitude + longitude)
+                }
+
+                question.removeClass('AskCity');
+                question.addClass('AskGender');
+                questionContent.empty();
+                askGender(name);
+            });
+
+            //klik op no way
+            $("#geengeo").click(function () {
+                question.removeClass('AskCity');
+                question.addClass('AskGender');
+                questionContent.empty();
+                askGender(name);
+            })
+        }
+
+        function askGender(name) {
+            const answers = GenderQuestion.Answers;
+            questionContent.append("<div class='question-title'>" + GenderQuestion.Question + "</div><div class='answers'></div>");
+            const answersContent = questionContent.find('.answers');
+            $.each(answers, function (i, val) {
+                const answer = $(this)[0][i],
                     transport = answer[0],
-                        context = answer[1],
-                        environment = answer[2],
-                        health = answer[3],
-                        finance = answer[4],
-                        social = answer[5];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='gender-1' id='"+transport+"' value='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
-                    })
-                answersContent.append("<button id='geefgender'> > Next Question </button>");
+                    context = answer[1],
+                    environment = answer[2],
+                    health = answer[3],
+                    finance = answer[4],
+                    society = answer[5],
+                    social = answer[6];
+                answersContent.append("<div class='option-" + i + "'><input type='radio' name='gender-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+            })
+            answersContent.append("<button id='geefgender'> > Next Question </button>");
 
-                $("#geefgender").click(function(){
-                    var gender = $("input[name='gender-1']:checked").val();
+            $("#geefgender").click(function () {
+                var gender = $("input[name='gender-1']:checked").val();
 
-                    if (gender != undefined) {
-                        console.log(gender);
-                        Sound();
-                        question.removeClass('AskGender');
-                        question.addClass('door');
-                        questionContent.empty();
-                        askDoor(name);
-                    }
-                })
-            }
+                if (gender != undefined) {
+                    console.log(gender);
+                    Sound();
+                    question.removeClass('AskGender');
+                    question.addClass('door');
+                    questionContent.empty();
+                    askDoor(name);
+                }
+            })
+        }
 
 
-                    //Milieu - gezondheid - financien-maatschappelijk - sociaal
+        //Milieu - gezondheid - financien-maatschappelijk - sociaal
         function askDoor(name) {
             //maak een array aan met de vraag
             var DoorQuestions = {
@@ -153,244 +156,244 @@ class Questions {
                 }, {
                     3: ['Car or Motorcycle', 'You might have a parking problem', 1, 1, 0, 0, 0],
                 }, {
-                    4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0,0,0,0, 0],
+                    4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0, 0, 0, 0, 0],
                 }]
             };
-            
+
             var DoorQuestions2 = {
                 Question: ["So, " + name + " I am a bit curious, how much money did you earn last month, in euro’s, you can make a guess? "],
                 Answers: [{
-                    0: ['Less than 500', empty, 0,1,0,0],
-                },{
-                    1: ['500 - 1000', empty, 0,1,0,0],
-                },{
-                    2: ['1000 - 3000', empty, 0,1,0,0],
-                },{
-                    3: ['3000 - 5000', empty, 0,1,0,0],
-                },{
-                    4: ["more than 5000", empty, 0,1,0,0],
+                    0: ['Less than 500', empty, 0, 1, 0, 0, 0],
                 }, {
-                    5: ["I'm not telling you that!", "You don’t want to answer that, no problem…", 0,0,0,0]
+                    1: ['500 - 1000', empty, 0, 1, 0, 0, 0],
+                }, {
+                    2: ['1000 - 3000', empty, 0, 1, 0, 0, 0],
+                }, {
+                    3: ['3000 - 5000', empty, 0, 1, 0, 0, 0],
+                }, {
+                    4: ["more than 5000", empty, 0, 1, 0, 0, 0],
+                }, {
+                    5: ["I'm not telling you that!", "You don’t want to answer that, no problem…", 0, 0, 0, 0, 0]
                 }]
             };
 
             var DoorQuestions3 = {
                 Question: [" I just have one more urgent question for you before I can give you the key. Dear " + name + ", how healthy do you feel today?"],
                 Answers: [{
-                    0: ['I feel absolutely fine!', "Great, here is the key!", 1,0,0,0,0],
-                },{
-                    1: ['Bit tired, but otherwise OK.', "So, take care not to overdo yourself, here is the key!", 1,0,0,0,0],
-                },{
-                    2: ['Coughing and sneezing, but this online, so no problem.', "Indeed, no problem, here is the key!", 1,0,0,0,0],
-                },{
-                    3: ['Running a fever and glad I am at home.', "Wow impressed you are here, here is the key!", 1,0,0,0,0],
-                },{
-                    4: ["Physical fine, but mentally…", "Ah, well, we all have those days, be welcome, here is the key!", 1,0,0,0,0],
+                    0: ['I feel absolutely fine!', "Great, here is the key!", 1, 0, 0, 0, 0],
+                }, {
+                    1: ['Bit tired, but otherwise OK.', "So, take care not to overdo yourself, here is the key!", 1, 0, 0, 0, 0],
+                }, {
+                    2: ['Coughing and sneezing, but this online, so no problem.', "Indeed, no problem, here is the key!", 1, 0, 0, 0, 0],
+                }, {
+                    3: ['Running a fever and glad I am at home.', "Wow impressed you are here, here is the key!", 1, 0, 0, 0, 0],
+                }, {
+                    4: ["Physical fine, but mentally…", "Ah, well, we all have those days, be welcome, here is the key!", 1, 0, 0, 0, 0],
                 }]
             };
 
             var RefrigeratorQuestions1 = {
                 Question: ["Hai " + name + "! I guess you are feeling hungry. I am just curious, what kind of food do you like to eat? You know, I have a thing for colours. If you would look into your own refrigerator right now, what would you see? Mind you, you might be looking into my brother or sisters inside. So tell me, what would you see."],
                 Answers: [{
-                    0: ['Mostly green', empty, 0,1,0,0,0],
-                },{
-                    1: ['A lot of white', empty, 0,1,0,0,0],
-                },{
-                    2: ['Red and pink', empty, 0,1,0,0,0],
-                },{
-                    3: ['Yellow', empty, 0,1,0,0,0],
-                },{
-                    4: ["A mix of everything", empty,0, 1,0,0,0],
+                    0: ['Mostly green', empty, 0, 1, 0, 0, 0],
                 }, {
-                    5: ["I'm not telling you!", "What, no answer? No problem. Let's move on to the next question.", 0,0,0,0,0]
+                    1: ['A lot of white', empty, 0, 1, 0, 0, 0],
+                }, {
+                    2: ['Red and pink', empty, 0, 1, 0, 0, 0],
+                }, {
+                    3: ['Yellow', empty, 0, 1, 0, 0, 0],
+                }, {
+                    4: ["A mix of everything", empty, 0, 1, 0, 0, 0],
+                }, {
+                    5: ["I'm not telling you!", "What, no answer? No problem. Let's move on to the next question.", 0, 0, 0, 0, 0]
                 }]
             };
 
             var RefrigeratorQuestions2 = {
                 Question: ["Now I have a visual image of your refrigerator I can imagine what kind of food you have in there. But I might be wrong. So, would you like to tell me more about your preferences. Do you like healthy food? Of course, you know eating healthy is important, but yes. Knowing and doing is not always the same. So, tell me, how much fruit and vegetables do you eat on a day, make a guess."],
                 Answers: [{
-                    0: ['Fruit? Vegetables? No way!', empty, 0,1,0,0,0],
-                },{
-                    1: ['I guess 1 piece of fruit and 100-gram vegetables', empty, 0,1,0,0,0],
-                },{
-                    2: ['I follow the rule, 2 pieces of fruit and 250-gram vegetables', empty, 0,1,0,0,0],
-                },{
-                    3: ['Are you kidding me, it’s mostly fruit and vegetables? But you know not all of them need to be refrigerated right?', empty, 0,1,0,0,0],
+                    0: ['Fruit? Vegetables? No way!', empty, 0, 1, 0, 0, 0],
                 }, {
-                    4: ["I'm not telling you!", "No problem, I just have one last question for you.", 0,0,0,0,0]
+                    1: ['I guess 1 piece of fruit and 100-gram vegetables', empty, 0, 1, 0, 0, 0],
+                }, {
+                    2: ['I follow the rule, 2 pieces of fruit and 250-gram vegetables', empty, 0, 1, 0, 0, 0],
+                }, {
+                    3: ['Are you kidding me, it’s mostly fruit and vegetables? But you know not all of them need to be refrigerated right?', empty, 0, 1, 0, 0, 0],
+                }, {
+                    4: ["I'm not telling you!", "No problem, I just have one last question for you.", 0, 0, 0, 0, 0]
                 }]
             };
 
             var RefrigeratorQuestions3 = {
                 Question: ["So, last question, a short one. Do you often throw away food?"],
                 Answers: [{
-                    0: ['Yes', empty, 1,0,1,0,0],
-                },{
-                    1: ['No', empty, 1,0,1,0,0],
-                },{
-                    2: ['Sorry refrigerator, none of your business', empty, 0,0,0,0,0],
+                    0: ['Yes', empty, 1, 0, 1, 0, 0],
+                }, {
+                    1: ['No', empty, 1, 0, 1, 0, 0],
+                }, {
+                    2: ['Sorry refrigerator, none of your business', empty, 0, 0, 0, 0, 0],
                 }]
             };
 
             var RefrigeratorQuestions4 = {
                 Question: ["Wait, wait. I just forgot. Would you like me to order some food for you? Just connect me to your daily planner and I can advise you, you know? How does that sound to you?"],
                 Answers: [{
-                    0: ['That would be awesome!', "Yes, yes. Thank you, and good luck!", 0,1,1,0,0],
-                },{
-                    1: ['You mean you can see if I have guests over for dinner?', "Yes, yes. Thank you, and good luck!", 0,0,1,0,1],
-                },{
-                    2: ['Maybe I can call you on my way back home and you can arrange it all?', "Yes, yes. Thank you, and good luck!", 0,1,1,0,1],
+                    0: ['That would be awesome!', "Yes, yes. Thank you, and good luck!", 0, 1, 1, 0, 0],
                 }, {
-                    3: ["Aren't you the curious one?", "Yes, yes. Thank you, and good luck!",0,0,0,0,1]
+                    1: ['You mean you can see if I have guests over for dinner?', "Yes, yes. Thank you, and good luck!", 0, 0, 1, 0, 1],
+                }, {
+                    2: ['Maybe I can call you on my way back home and you can arrange it all?', "Yes, yes. Thank you, and good luck!", 0, 1, 1, 0, 1],
+                }, {
+                    3: ["Aren't you the curious one?", "Yes, yes. Thank you, and good luck!", 0, 0, 0, 0, 1]
                 }]
             };
 
             var PhoneQuestions1 = {
                 Question: ["Thanks " + name + " for picking me up.  So happy you want to talk with me! You know you can do a lot more with me than just talk. Ah, " + name + " of course, you already knew that. On your own phone, which social media do you use? Please tell me all!"],
                 Answers: [{
-                    0: ['Instagram', "Yes, yes. Thank you, and good luck!", 0,1,0,1,1],
-                },{
-                    1: ['Facebook', "Yes, yes. Thank you, and good luck!", 0,0,1,0,1],
-                },{
-                    2: ['Twitter', "Yes, yes. Thank you, and good luck!", 0,1,1,0,1],
+                    0: ['Instagram', "Yes, yes. Thank you, and good luck!", 0, 1, 0, 1, 1],
                 }, {
-                    3: ["LinkedIN", "Yes, yes. Thank you, and good luck!",0,0,0,0,1]
+                    1: ['Facebook', "Yes, yes. Thank you, and good luck!", 0, 0, 1, 0, 1],
                 }, {
-                    4: ["WhatsApp", empty, 0,1,0,1,1]
+                    2: ['Twitter', "Yes, yes. Thank you, and good luck!", 0, 1, 1, 0, 1],
                 }, {
-                    5: ["Snapchat", empty, 0,1,0,1,1]
+                    3: ["LinkedIN", "Yes, yes. Thank you, and good luck!", 0, 0, 0, 0, 1]
                 }, {
-                    6: ["I don't use any social media, so none of the above", empty, 0,1,0,1,1]
+                    4: ["WhatsApp", empty, 0, 1, 0, 1, 1]
                 }, {
-                    7: ["None of your business!", "Is that question to private? You can skip it. But brace yourself, next question might be even more private.", 0,0,0,0,0]
+                    5: ["Snapchat", empty, 0, 1, 0, 1, 1]
+                }, {
+                    6: ["I don't use any social media, so none of the above", empty, 0, 1, 0, 1, 1]
+                }, {
+                    7: ["None of your business!", "Is that question to private? You can skip it. But brace yourself, next question might be even more private.", 0, 0, 0, 0, 0]
                 }]
             };
 
             var PhoneQuestions2 = {
                 Question: ["In my experience, most people do not like to give an honest answer to this question, but of course you are the exception. How much time do you spent on your phone on daily bases?"],
                 Answers: [{
-                    0: ['0-1 hour', empty, 0,1,0,0,1],
-                },{
-                    1: ['1-2 hours', empty, 0,1,0,0,1],
-                },{
-                    2: ['2-3 hours', empty, 0,1,0,0,1],
+                    0: ['0-1 hour', empty, 0, 1, 0, 0, 1],
                 }, {
-                    3: ["3-4 hours", empty,0,1,0,0,1]
+                    1: ['1-2 hours', empty, 0, 1, 0, 0, 1],
                 }, {
-                    4: ["4-5 hours", empty, 0,1,0,0,1]
+                    2: ['2-3 hours', empty, 0, 1, 0, 0, 1],
                 }, {
-                    5: ["5 hours more", empty, 0,1,0,0,1]
-                },{
-                    6: ["None of your business!", "To personal? No problem, you don’t have to answer every question.", 0,0,0,0,0]
+                    3: ["3-4 hours", empty, 0, 1, 0, 0, 1]
+                }, {
+                    4: ["4-5 hours", empty, 0, 1, 0, 0, 1]
+                }, {
+                    5: ["5 hours more", empty, 0, 1, 0, 0, 1]
+                }, {
+                    6: ["None of your business!", "To personal? No problem, you don’t have to answer every question.", 0, 0, 0, 0, 0]
                 }]
             };
-            
+
             var PhoneQuestions3 = {
                 Question: ["Next question, this is a bit painful for me. When will you replace me for a younger version?"],
                 Answers: [{
-                    0: ['When you are broken and beyond repair', empty, 0,1,0,0,1],
-                },{
-                    1: ['When your screen is broken', empty, 0,1,0,0,1],
-                },{
-                    2: ['When a newer version of you is available', empty, 0,1,0,0,1],
+                    0: ['When you are broken and beyond repair', empty, 0, 1, 0, 0, 1],
                 }, {
-                    3: ["When you are running out of memory", empty,0,1,0,0,1]
+                    1: ['When your screen is broken', empty, 0, 1, 0, 0, 1],
                 }, {
-                    4: ["None of your business!", empty, 0,0,0,0,0]
+                    2: ['When a newer version of you is available', empty, 0, 1, 0, 0, 1],
+                }, {
+                    3: ["When you are running out of memory", empty, 0, 1, 0, 0, 1]
+                }, {
+                    4: ["None of your business!", empty, 0, 0, 0, 0, 0]
                 }]
             };
-                        
+
             var PhoneQuestions4 = {
                 Question: ["Oh Really? And, I hardly dare to ask. When you replace me, what do you do with me? Please tell me that you don’t just throw me away. I mean, if it where you, how would you feel? I have been your friend, haven’t I?"],
                 Answers: [{
-                    0: ['Of course I throw you away, what else would I do?', "Sorry, I have another call coming in. Nice to meet you, so long!", 1,0,1,0,0],
-                },{
-                    1: ['I try to sell you for the best possible price.', "Sorry, I have another call coming in. Nice to meet you, so long!", 1,0,1,0,0],
-                },{
-                    2: ['I bring you to a recycle station, so the best parts of you can have a longer life!', "Sorry, I have another call coming in. Nice to meet you, so long!", 1,0,1,0,0],
+                    0: ['Of course I throw you away, what else would I do?', "Sorry, I have another call coming in. Nice to meet you, so long!", 1, 0, 1, 0, 0],
                 }, {
-                    3: ["I keep you for sentimental reasons.", "Sorry, I have another call coming in. Nice to meet you, so long!",1,0,1,0,0]
+                    1: ['I try to sell you for the best possible price.', "Sorry, I have another call coming in. Nice to meet you, so long!", 1, 0, 1, 0, 0],
                 }, {
-                    4: ["I'm not telling you.", "Sorry, I have another call coming in. Nice to meet you, so long!", 0,0,0,0,0]
+                    2: ['I bring you to a recycle station, so the best parts of you can have a longer life!', "Sorry, I have another call coming in. Nice to meet you, so long!", 1, 0, 1, 0, 0],
+                }, {
+                    3: ["I keep you for sentimental reasons.", "Sorry, I have another call coming in. Nice to meet you, so long!", 1, 0, 1, 0, 0]
+                }, {
+                    4: ["I'm not telling you.", "Sorry, I have another call coming in. Nice to meet you, so long!", 0, 0, 0, 0, 0]
                 }]
             };
 
             var ToiletQuestions1 = {
                 Question: ["Oh, you are visiting me, so happy! First time today! You know, I am one of the most personal objects in your house. How is your relationship with your own ehm … toilet? Maybe crazy question, how often do you visit your toilet a day?"],
                 Answers: [{
-                    0: ['Not so often, once or twice', empty, 1,1,0,0,0],
-                },{
-                    1: ['Pretty much average', empty, 1,1,0,0,0],
-                },{
-                    2: ['My toilet and me have a really good relationship, we see each other at least 6 times a day', empty, 1,1,0,0,0],
+                    0: ['Not so often, once or twice', empty, 1, 1, 0, 0, 0],
                 }, {
-                    3: ["That's none of your business!", empty, 0,0,0,0,0]
+                    1: ['Pretty much average', empty, 1, 1, 0, 0, 0],
+                }, {
+                    2: ['My toilet and me have a really good relationship, we see each other at least 6 times a day', empty, 1, 1, 0, 0, 0],
+                }, {
+                    3: ["That's none of your business!", empty, 0, 0, 0, 0, 0]
                 }]
             };
 
             var ToiletQuestions2 = {
                 Question: ["TOILET: You know, if you like I could analyse your pee and tell you how healthy you are, would you like that?"],
                 Answers: [{
-                    0: ['Yes', empty, 0,1,0,0,0],
-                },{
-                    1: ['No', empty, 0,0,0,0,0],
+                    0: ['Yes', empty, 0, 1, 0, 0, 0],
+                }, {
+                    1: ['No', empty, 0, 0, 0, 0, 0],
                 }]
             };
 
             var ToiletQuestions3 = {
                 Question: ["OK, it might be a bit confronting, knowing all about your pee. But you know, you could have me installed at the home of an elderly person you care about. And I could update you daily or weekly on his or her health, how would you like that?"],
                 Answers: [{
-                    0: ['That would be awesome, daily please so I know if they are still up and running.', empty, 0,1,0,1,1],
-                },{
-                    1: ['I guess I would have to ask their permission first.', empty, 0,1,0,1,1],
-                },{
-                    2: ['Daily seems a bit much, but once a month would be nice.', empty, 0,1,0,1,1],
+                    0: ['That would be awesome, daily please so I know if they are still up and running.', empty, 0, 1, 0, 1, 1],
                 }, {
-                    3: ["Are you kidding me? Can I read all the pee of my whole family?", empty, 0,1,0,1,1]
+                    1: ['I guess I would have to ask their permission first.', empty, 0, 1, 0, 1, 1],
+                }, {
+                    2: ['Daily seems a bit much, but once a month would be nice.', empty, 0, 1, 0, 1, 1],
+                }, {
+                    3: ["Are you kidding me? Can I read all the pee of my whole family?", empty, 0, 1, 0, 1, 1]
                 }]
-            };   
-            
+            };
+
             var ToiletQuestions4 = {
                 Question: ["Hey, have you already spoken to my buddy the shower? Guess what, we have a mutual question. Do you have any idea how much water we use on a daily base?"],
                 Answers: [{
-                    0: ['Yes, I know exactly how much, and I also know what I pay for water. ', empty, 1,0,1,0,0],
-                },{
-                    1: ['I kind of know, not exactly.', empty, 1,0,1,0,0],
-                },{
-                    2: ['I have no idea but would be interested to know.', empty, 1,0,1,0,0],
+                    0: ['Yes, I know exactly how much, and I also know what I pay for water. ', empty, 1, 0, 1, 0, 0],
                 }, {
-                    3: ["I don’t know and I don’t care.", empty, 0,0,0,0,0]
+                    1: ['I kind of know, not exactly.', empty, 1, 0, 1, 0, 0],
+                }, {
+                    2: ['I have no idea but would be interested to know.', empty, 1, 0, 1, 0, 0],
+                }, {
+                    3: ["I don’t know and I don’t care.", empty, 0, 0, 0, 0, 0]
                 }]
-            };   
+            };
 
             var ShowerQuestions1 = {
                 Question: ["Hey! Have you spoken to my buddy the Toilet? Who do you prefer to spend more time with " + name + ", me or him?"],
                 Answers: [{
-                    0: ['Of course, you shower!', empty, 0,0,0,0,1],
-                },{
-                    1: ['Hmm, I would certainly miss toilet more if I didn’t have him.', empty, 0,0,0,0,1]
+                    0: ['Of course, you shower!', empty, 0, 0, 0, 0, 1],
+                }, {
+                    1: ['Hmm, I would certainly miss toilet more if I didn’t have him.', empty, 0, 0, 0, 0, 1]
                 }]
-            };  
+            };
 
             var ShowerResponse = "If we keep playing this popularity game, I win. Won’t you agree, " + name + "? But you know, duty calls, come on shower, let's move on. Thanks " + name + ", see you soon!";
             var ShowerQuestions2 = {
                 Question: ["I see, hard to compare us, right? You need toilet every day, me maybe not. But tell me truly, how good is your relationship with your own shower?"],
                 Answers: [{
-                    0: ['Very good, we meet every day twice, mornings and evenings!', ShowerResponse, 1,0,1,0,0],
-                },{
-                    1: ['Honestly? I prefer a bath.', ShowerResponse, 1,0,1,0,0]
-                },{
-                    2: ["I like to wake up with a shower every day.", ShowerResponse, 1,0,1,0,0]
-                },{
-                    3: ["Only when I have to.", ShowerResponse, 1,0,1,0,0]
+                    0: ['Very good, we meet every day twice, mornings and evenings!', ShowerResponse, 1, 0, 1, 0, 0],
+                }, {
+                    1: ['Honestly? I prefer a bath.', ShowerResponse, 1, 0, 1, 0, 0]
+                }, {
+                    2: ["I like to wake up with a shower every day.", ShowerResponse, 1, 0, 1, 0, 0]
+                }, {
+                    3: ["Only when I have to.", ShowerResponse, 1, 0, 1, 0, 0]
                 }]
-            };  
+            };
 
             if (question.hasClass('door')) {
                 const answers = DoorQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
-                $.each(answers,  function (i, val) {
+                $.each(answers, function (i, val) {
                     const answer = $(this)[0][i],
                         transport = answer[0],
                         context = answer[1],
@@ -399,11 +402,11 @@ class Questions {
                         finance = answer[4],
                         society = answer[5],
                         social = answer[6];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-1' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='door-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
                 });
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
-                $('#transportation').click(function() {
+                $('#transportation').click(function () {
                     const transportation = $("input[name='door-1']:checked"),
                         transportationVal = transportation.val(),
                         environment = transportation.data("environment"),
@@ -417,11 +420,11 @@ class Questions {
                     askDoor(name);
                     if (transportationVal != undefined) {
                         $('#transportation').attr({
-                            "data-environment":environment,
-                            "data-health":health,
-                            "data-finance":finance,
-                            "data-society":society,
-                            "data-social":social,
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
                         })
                         $.firstGuru();
                     }
@@ -431,7 +434,7 @@ class Questions {
                 const answers = DoorQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
-                $.each(answers,  function (i, val) {
+                $.each(answers, function (i, val) {
                     const answer = $(this)[0][i],
                         transport = answer[0],
                         context = answer[1],
@@ -440,11 +443,11 @@ class Questions {
                         finance = answer[4],
                         society = answer[5],
                         social = answer[6];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-2' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='door-2' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
                 });
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
-                $('#transportation').click(function() {
+                $('#transportation').click(function () {
                     const transportation = $("input[name='door-2']:checked"),
                         transportationVal = transportation.val(),
                         environment = transportation.data("environment"),
@@ -458,11 +461,11 @@ class Questions {
                     askDoor(name);
                     if (transportationVal != undefined) {
                         $('#transportation').attr({
-                            "data-environment":environment,
-                            "data-health":health,
-                            "data-finance":finance,
-                            "data-society":society,
-                            "data-social":social,
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
                         });
                         $.updateData();
                     }
@@ -471,7 +474,7 @@ class Questions {
                 const answers = DoorQuestions3.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions3.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
-                $.each(answers,  function (i, val) {
+                $.each(answers, function (i, val) {
                     const answer = $(this)[0][i],
                         transport = answer[0],
                         context = answer[1],
@@ -480,11 +483,11 @@ class Questions {
                         finance = answer[4],
                         society = answer[5],
                         social = answer[6];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-3' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='door-3' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
                 });
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
-                $('#transportation').click(function() {
+                $('#transportation').click(function () {
                     const transportation = $("input[name='door-3']:checked"),
                         transportationVal = transportation.val(),
                         environment = transportation.data("environment"),
@@ -497,13 +500,14 @@ class Questions {
                     questionContent.empty();
                     if (transportationVal != undefined) {
                         $('#transportation').attr({
-                            "data-environment":environment,
-                            "data-health":health,
-                            "data-finance":finance,
-                            "data-society":society,
-                            "data-social":social,
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
                         });
                         $.updateData();
+                        question.hide();
                     }
                 });
             }
@@ -511,8 +515,8 @@ class Questions {
     }
 }
 
-    export default(() => {
-        $('.question').each(function() {
-            new Questions($(this));
-        })
+export default(() => {
+    $('.question').each(function() {
+        new Questions($(this));
     })
+})
