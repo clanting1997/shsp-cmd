@@ -45,7 +45,7 @@ class Guru {
         var answerData;
 
         $.firstGuru = function () {
-            const answer = $("#transportation"),
+            const answer = guruCanvas,
                 environment = answer.data("environment"),
                 health = answer.data("health"),
                 finance = answer.data("finance"),
@@ -68,8 +68,7 @@ class Guru {
         }
 
         $.updateData = function () {
-            const answer = $("#transportation");
-
+            const answer = guruCanvas;
 
             // migrate old + new data
 
@@ -78,6 +77,7 @@ class Guru {
                 finance = answer.data("finance") + answerData.finance,
                 society = answer.data("society") + answerData.society,
                 social = answer.data("social") + answerData.social;
+
 
             _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
 

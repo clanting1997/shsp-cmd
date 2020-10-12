@@ -419,13 +419,13 @@ class Questions {
                     question.addClass('door2');
                     askDoor(name);
                     if (transportationVal != undefined) {
-                        $('#transportation').attr({
+                        $('.Guru').attr({
                             "data-environment": environment,
                             "data-health": health,
                             "data-finance": finance,
                             "data-society": society,
                             "data-social": social,
-                        })
+                        });
                         $.firstGuru();
                     }
                 });
@@ -460,7 +460,7 @@ class Questions {
                     question.addClass('door3');
                     askDoor(name);
                     if (transportationVal != undefined) {
-                        $('#transportation').attr({
+                        $('.Guru').attr({
                             "data-environment": environment,
                             "data-health": health,
                             "data-finance": finance,
@@ -495,11 +495,10 @@ class Questions {
                         finance = transportation.data("finance"),
                         society = transportation.data("society"),
                         social = transportation.data("social");
-                    console.log(transportation);
-                    question.removeClass('door3');
                     questionContent.empty();
+                    question.removeClass('door3');
                     if (transportationVal != undefined) {
-                        $('#transportation').attr({
+                        $('.Guru').attr({
                             "data-environment": environment,
                             "data-health": health,
                             "data-finance": finance,
@@ -507,7 +506,7 @@ class Questions {
                             "data-social": social,
                         });
                         $.updateData();
-                        question.hide();
+                        // question.hide();
                     }
                 });
             }
