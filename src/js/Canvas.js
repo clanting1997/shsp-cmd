@@ -7,6 +7,15 @@ import { CinematicCamera } from 'three/examples/jsm/cameras/CinematicCamera.js';
 import {AmbientLight} from "three";
 import Questions from "././Questions";
 
+// models
+import ModelDoor from '../models/deur-merged.glb';
+import ModelDouche from '../models/douche-merged.glb';
+import ModelKey from '../models/key-merged.glb';
+import ModelFridge from '../models/koelkast-merged.glb';
+import ModelPhone from '../models/telefoon-merged.glb';
+import ModelToilet from '../models/toilet-merged.glb';
+
+
 class Canvas {
     constructor($Canvas) {
         this.$canvas = $Canvas;
@@ -49,8 +58,10 @@ class Canvas {
             var loader = new GLTFLoader();
 
             // Hier voegen wij een model toe
-            loader.load( 'src/assets/models/deur-merged.glb', function ( object ) {
-                    var deur = object.scene;
+            // loader.load( '../models/deur-merged.glb', function ( object ) {
+                loader.load( ModelDoor, function ( object ) {
+
+                        var deur = object.scene;
 
                     deur.scale.x = 50;
                     deur.scale.y =70;
@@ -74,7 +85,7 @@ class Canvas {
                 }
             );
 
-            loader.load( 'src/assets/models/douche-merged.glb', function ( object ) {
+            loader.load( ModelDouche, function ( object ) {
                 var douche = object.scene;
 
                 douche.scale.x = 50;
@@ -98,7 +109,7 @@ class Canvas {
             }
         );
 
-            loader.load( 'src/assets/models/key-merged.glb', function ( object ) {
+            loader.load( ModelKey, function ( object ) {
                 var key = object.scene;
 
                 key.scale.x = 50;
@@ -122,7 +133,7 @@ class Canvas {
             }
         );
 
-            loader.load( 'src/assets/models/koelkast-merged.glb', function ( object ) {
+            loader.load( ModelFridge, function ( object ) {
                 var koelkast = object.scene;
 
                 koelkast.scale.x = 50;
@@ -146,7 +157,7 @@ class Canvas {
             }
         );
 
-            loader.load( 'src/assets/models/telefoon-merged.glb', function ( object ) {
+            loader.load( ModelPhone, function ( object ) {
             var telefoon = object.scene;
 
             telefoon.scale.x = 50;
@@ -170,7 +181,7 @@ class Canvas {
         }
     );
 
-            loader.load( 'src/assets/models/toilet-merged.glb', function ( object ) {
+            loader.load( ModelToilet, function ( object ) {
         var toilet = object.scene;
 
         toilet.scale.x = 50;

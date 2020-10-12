@@ -27,6 +27,30 @@ module.exports = {
                 ]
             },
             {
+                test: /\.mp3$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'builders/sound/'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.glb$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'builders/models/'
+                        }
+                    }
+                ]
+            },
+            {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     {

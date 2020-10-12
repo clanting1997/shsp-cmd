@@ -1,3 +1,6 @@
+// Sounds
+import BM from '../sounds/BM.mp3';
+
 class Sound {
     constructor($Sound) {
         this.$Sound = $Sound;
@@ -8,7 +11,7 @@ class Sound {
 listener() {
     if ( $("#geefgender").length) {
     var audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', '././src/assets/sounds/BM.mp3');
+        audioElement.setAttribute('src', BM);
             audioElement.play();
             $("#status").text("Status: Playing");
         };
