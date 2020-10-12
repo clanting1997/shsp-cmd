@@ -18,9 +18,9 @@ class Questions {
             var GenderQuestion = {
                 Question: "Wait... wait, just one more question! I almost forgot, but please tell me, are you, or do feel you more...",
                 Answers: [{
-                    0: ['Male', 'empty', 0, 0, 0, 1],
+                    0: ['Male', 'empty', 0, 0, 0, 1, 0],
                 }, {
-                    1: ['Female', 'empty', 0, 0, 0, 1]
+                    1: ['Female', 'empty', 0, 0, 0, 1, 0], 
                 }]
             }
 
@@ -118,8 +118,9 @@ class Questions {
                         environment = answer[2],
                         health = answer[3],
                         finance = answer[4],
-                        social = answer[5];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='gender-1' id='"+transport+"' value='"+transport+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='gender-1' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport + "</label></div>");
                     })
                 answersContent.append("<button id='geefgender'> > Next Question </button>");
 
@@ -153,24 +154,24 @@ class Questions {
                 }, {
                     3: ['Car or Motorcycle', 'You might have a parking problem', 1, 1, 0, 0, 0],
                 }, {
-                    4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0,0,0,0, 0],
+                    4: ['None of those', 'You are not coming? Or travel by air balloon, that would be an entrance!', 0,0,0,0,0],
                 }]
             };
             
             var DoorQuestions2 = {
                 Question: ["So, " + name + " I am a bit curious, how much money did you earn last month, in euro’s, you can make a guess? "],
                 Answers: [{
-                    0: ['Less than 500', empty, 0,1,0,0],
+                    0: ['Less than 500', empty, 0,1,0,0,0],
                 },{
-                    1: ['500 - 1000', empty, 0,1,0,0],
+                    1: ['500 - 1000', empty, 0,1,0,0,0],
                 },{
-                    2: ['1000 - 3000', empty, 0,1,0,0],
+                    2: ['1000 - 3000', empty, 0,1,0,0,0],
                 },{
-                    3: ['3000 - 5000', empty, 0,1,0,0],
+                    3: ['3000 - 5000', empty, 0,1,0,0,0],
                 },{
-                    4: ["more than 5000", empty, 0,1,0,0],
+                    4: ["more than 5000", empty, 0,1,0,0,0],
                 }, {
-                    5: ["I'm not telling you that!", "You don’t want to answer that, no problem…", 0,0,0,0]
+                    5: ["I'm not telling you that!", "You don’t want to answer that, no problem…", 0,0,0,0,0]
                 }]
             };
 
@@ -471,7 +472,7 @@ class Questions {
                         finance = answer[4],
                         society = answer[5],
                         social = answer[6];
-                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-1' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
+                    answersContent.append("<div class='option-"+i+"'><input type='radio' name='door-3' value='"+transport+"' id='"+transport+"' data-environment='"+environment+"' data-health='"+health+"' data-finance='"+finance+"' data-society='"+society+"' data-social='"+social+"'><label for='"+transport+"'>" + transport  + "</label></div>");
                 });
                 answersContent.append("<button id='transportation'> > Next Question </button>");
 
@@ -480,6 +481,7 @@ class Questions {
                     console.log(transportation);
                     question.removeClass('door3');
                     questionContent.empty();
+                    question.hide();
                     if (transportation != undefined) {
                         $.updateGuru();
                     }
