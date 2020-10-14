@@ -63,9 +63,20 @@ class Guru {
                 'society': society,
                 'social':social
             }
-
+            var DataJSON = JSON.stringify(answerData);
+            
             console.log(answerData);
+            console.log(DataJSON);
+            $.ajax({
+                type: "POST",
+                url: "data.php",
+                data: {answerData: DataJSON},
+                succes: function() {
+                    console.log('data verstuurd');
+                }
+             });
         }
+
 
         $.updateData = function () {
             const answer = guruCanvas;

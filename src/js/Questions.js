@@ -496,6 +496,7 @@ class Questions {
                         society = transportation.data("society"),
                         social = transportation.data("social");
                     questionContent.empty();
+                    question.hide();
                     question.removeClass('door3');
                     if (transportationVal != undefined) {
                         $('.Guru').attr({
