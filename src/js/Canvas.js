@@ -27,8 +27,8 @@ class Canvas {
         const canvas = this.$canvas,
             question = this.$question;
         var pickedObject = this.$pickedObject;
-
-        var camera, scene, raycaster, renderer, stats;
+        var mouseX, mouseY;
+        var camera, scene, raycaster, renderer, stats, particles;
         var enableclick = 0;
         var mouse = new THREE.Vector2(), INTERSECTED;
         var radius = 100, theta = 0;
@@ -41,18 +41,20 @@ class Canvas {
 
             var array_buffer = null;
 
-            camera = new CinematicCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-            camera.setLens( 5 );
-            camera.position.set( 2, 1, 500 );
+            camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 2, 1000 );
+            camera.position.set(0, 0, 1000) ;
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color( 0xf0f0f0 );
+            
+            //
 
             scene.add( new THREE.AmbientLight( 0xffffff, 1.0 ) );
-
             var light = new THREE.DirectionalLight( 0xffffff, 0.35 );
             light.position.set( 1, 1, 1 ).normalize();
             scene.add( light );
+
+            //
 
             //Import glb
             var loader = new GLTFLoader();
@@ -69,7 +71,7 @@ class Canvas {
 
                     deur.position.x = 0;
                     deur.position.y = 0;
-                    deur.position.z = 200;
+                    deur.position.z = -100;
                     
                     deur.rotation.y = -90;
                     scene.add( deur);
@@ -206,10 +208,11 @@ class Canvas {
 );
             
 
-            // three js example
+            //Maak een nieuwe raycaster
             raycaster = new THREE.Raycaster();
-
             renderer = new THREE.WebGLRenderer( { antialias: true } );
+            
+            //Maak de klikregio net zo groot als het scherm
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             canvas[0].appendChild( renderer.domElement );
@@ -217,6 +220,7 @@ class Canvas {
             stats = new Stats();
             document.body.appendChild( stats.dom );
 
+            document.body.addEventListener( 'pointermove', onPointerMove, false );
             document.addEventListener( 'mousemove', onDocumentMouseMove, false );
             window.addEventListener( 'resize', onWindowResize, false );
 
@@ -232,11 +236,14 @@ class Canvas {
 
                 //intersects is de gevonden objecten
                 var intersects = raycaster.intersectObjects(objects, true);
+
                 //zet de intersects neer in rayobject
                 var rayobject = intersects[0];
-                
+                console.log(rayobject.object.name);
+
                //check of hij ooit al een formulier gegeven heeft
                if (!$(question).hasClass("begonnen")){
+
                     if (rayobject.object.name.includes("deur")) {
                         //voeg class toe van onderwerp
                         question.addClass('AskName')
@@ -247,103 +254,68 @@ class Canvas {
                         //laat de vragen zien
                         question.show();
                     } else if (rayobject.object.name.includes("douche")) {
-                        Questions();
                         question.addClass('douche');
                         question.addClass('begonnen');
+                        question.addClass('passedStart');
+                        Questions();
                         question.show();
                     } else if (rayobject.object.name.includes("koelkast")) {
-                        Questions();
                         question.addClass('koelkast');
                         question.addClass('begonnen');
+                        question.addClass('passedStart');
+                        Questions();
                         question.show();
                     } else if (rayobject.object.name.includes("telefoon")) {
-                        Questions();
                         question.addClass('telefoon');
                         question.addClass('begonnen');
+                        question.addClass('passedStart');
+                        Questions();
                         question.show();
                     } else if (rayobject.object.name.includes("toilet")) {
-                        Questions();
                         question.addClass('toilet');
                         question.addClass('begonnen');
+                        question.addClass('passedStart');
+                        Questions();
                         question.show();
                     }
                 }
         }
             window.addEventListener( 'mousedown', onMouseClick, true);
-            //renderer.domElement.addEventListener('click', onMouseClick, false);
-
-            var effectController = {
-
-                focalLength: 55,
-                // jsDepthCalculation: true,
-                // shaderFocus: false,
-                //
-                fstop: 2.8,
-                maxblur: 0,
-                //
-                showFocus: false,
-                focalDepth: 3,
-                // manualdof: false,
-                // vignetting: false,
-                // depthblur: false,
-                //
-                // threshold: 0.5,
-                // gain: 2.0,
-                // bias: 0.5,
-                // fringe: 0.7,
-                //
-                // focalLength: 35,
-                // noise: true,
-                // pentagon: false,
-                //
-                // dithering: 0.0001
-
-            };
-
-            var matChanger = function ( ) {
-
-                for ( var e in effectController ) {
-
-                    if ( e in camera.postprocessing.bokeh_uniforms ) {
-
-                        camera.postprocessing.bokeh_uniforms[ e ].value = effectController[ e ];
-
-                    }
-
-                }
-
-                camera.postprocessing.bokeh_uniforms[ 'znear' ].value = camera.near;
-                camera.postprocessing.bokeh_uniforms[ 'zfar' ].value = camera.far;
-                camera.setLens( effectController.focalLength, camera.frameHeight, effectController.fstop, camera.coc );
-                effectController[ 'focalDepth' ] = camera.postprocessing.bokeh_uniforms[ 'focalDepth' ].value;
-
-            };
-
-            //
-
-            var gui = new GUI();
-
-            gui.add( effectController, 'focalLength', 1, 135, 0.01 ).onChange( matChanger );
-            gui.add( effectController, 'fstop', 1.8, 22, 0.01 ).onChange( matChanger );
-            gui.add( effectController, 'focalDepth', 0.1, 100, 0.001 ).onChange( matChanger );
-            gui.add( effectController, 'showFocus', true ).onChange( matChanger );
-
-            matChanger();
 
             window.addEventListener( 'resize', onWindowResize, false );
+            
+            //
 
+            //Particles
+            var vertices = [];
+            var material;
+            var geometry = new THREE.BufferGeometry();
+
+            for ( var i = 0; i < 10000; i ++ ) {
+
+                var x = 2000 * Math.random() - 1000;
+                var y = 2000 * Math.random() - 1000;
+                var z = 2000 * Math.random() - 1000;
+
+                vertices.push( x, y, z );
+            }
+
+            geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+            material = new THREE.PointsMaterial( { size: 5, sizeAttenuation: true, alphaTest: 1, transparent: true } );
+            material.color = new THREE.Color("rgb(252, 202, 70)");
+            particles = new THREE.Points( geometry, material );
+            scene.add( particles );
         }
+
 
         function onWindowResize() {
             const _this = $(this);
-
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
 
             renderer.setSize( window.innerWidth, window.innerHeight );
 
         }
-
 
         function onDocumentMouseMove( event ) {
             const _this = $(this);
@@ -354,27 +326,34 @@ class Canvas {
             mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
         }
 
+        
+			function onPointerMove( event ) {
+
+				if ( event.isPrimary === false ) return;
+
+                var windowHalfX = window.innerWidth / 2;
+                var windowHalfY = window.innerHeight / 2;
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+            }
+
         function animate() {
-
             requestAnimationFrame( animate, renderer.domElement );
-
             render();
-            stats.update();
-
         }
 
 
         function render() {
+            //particles laten bewegen
+            particles.position.z -= .05;
+            particles.position.x += ( - mouse.x - particles.position.x );
+            particles.position.y += ( - mouse.y - particles.position.y );
+
+            //objecten laten bewegen
+
             camera.lookAt( scene.position );
             camera.updateMatrixWorld();
-
-            if ( camera.postprocessing.enabled ) {
-                camera.renderCinematic( scene, renderer );
-            } else {
-                scene.overrideMaterial = null;
-                renderer.clear();
-                renderer.render( scene, camera );
-            }
+            renderer.render( scene, camera );
         }
     }
 }

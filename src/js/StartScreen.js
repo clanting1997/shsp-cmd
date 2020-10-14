@@ -12,6 +12,7 @@ class StartScreen {
 
         startScreenWrapper.on('click', function () {
             startScreen.hide();
+            $('.question').removeClass('begonnen');
         })
     }
 }

@@ -26,10 +26,10 @@ class Guru {
         guru.scale.set(2,2,2);
         guru.material.transparent = true;
 
-        var renderer = new THREE.WebGLRenderer();
+        var renderer = new THREE.WebGLRenderer({alpha: true});
         renderer.setSize( Width, Height );
         guruCanvas[0].appendChild( renderer.domElement );
-        renderer.setClearColor (0xffffff, 1);
+        //renderer.setClearColor (0xffffff, 1);
 
         var controls = new OrbitControls( camera, renderer.domElement );
         camera.position.set( 0, 20, 5 );
@@ -55,7 +55,6 @@ class Guru {
             _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
 
             // create data array
-
             answerData = {
                 'environment': environment,
                 'health': health,
@@ -63,10 +62,8 @@ class Guru {
                 'society': society,
                 'social':social
             }
+
             var DataJSON = JSON.stringify(answerData);
-            
-            console.log(answerData);
-            console.log(DataJSON);
             $.ajax({
                 type: "POST",
                 url: "data.php",
@@ -99,7 +96,7 @@ class Guru {
                 'health': health,
                 'finance': finance,
                 'society': society,
-                'social':social
+                'social': social
             }
 
             console.log(answerData);

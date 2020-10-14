@@ -24,6 +24,10 @@ class Questions {
             }]
         }
 
+        if (question.hasClass("passedStart")){
+            stelVraag(name);
+        }
+
         //als de persoon nog niets geklikt heeft
         if (question.hasClass('AskName')) {
             var AskName = "Who are you? Please tell me your name.";
@@ -130,19 +134,18 @@ class Questions {
                 var gender = $("input[name='gender-1']:checked").val();
 
                 if (gender != undefined) {
-                    console.log(gender);
+                    $(".sound").addClass(gender);
                     Sound();
                     question.removeClass('AskGender');
                     question.addClass('door');
                     questionContent.empty();
-                    askDoor(name);
+                    stelVraag(name);
                 }
             })
         }
 
-
         //Milieu - gezondheid - financien-maatschappelijk - sociaal
-        function askDoor(name) {
+        function stelVraag(name) {
             //maak een array aan met de vraag
             var DoorQuestions = {
                 //Milieu - Gezondheid - Fininancien - Maatschappelijk - Sociaal
@@ -192,7 +195,7 @@ class Questions {
                 }]
             };
 
-            var RefrigeratorQuestions1 = {
+            var RefrigeratorQuestions = {
                 Question: ["Hai " + name + "! I guess you are feeling hungry. I am just curious, what kind of food do you like to eat? You know, I have a thing for colours. If you would look into your own refrigerator right now, what would you see? Mind you, you might be looking into my brother or sisters inside. So tell me, what would you see."],
                 Answers: [{
                     0: ['Mostly green', empty, 0, 1, 0, 0, 0],
@@ -248,7 +251,7 @@ class Questions {
                 }]
             };
 
-            var PhoneQuestions1 = {
+            var PhoneQuestions = {
                 Question: ["Thanks " + name + " for picking me up.  So happy you want to talk with me! You know you can do a lot more with me than just talk. Ah, " + name + " of course, you already knew that. On your own phone, which social media do you use? Please tell me all!"],
                 Answers: [{
                     0: ['Instagram', "Yes, yes. Thank you, and good luck!", 0, 1, 0, 1, 1],
@@ -318,7 +321,7 @@ class Questions {
                 }]
             };
 
-            var ToiletQuestions1 = {
+            var ToiletQuestions = {
                 Question: ["Oh, you are visiting me, so happy! First time today! You know, I am one of the most personal objects in your house. How is your relationship with your own ehm … toilet? Maybe crazy question, how often do you visit your toilet a day?"],
                 Answers: [{
                     0: ['Not so often, once or twice', empty, 1, 1, 0, 0, 0],
@@ -366,7 +369,7 @@ class Questions {
                 }]
             };
 
-            var ShowerQuestions1 = {
+            var ShowerQuestions = {
                 Question: ["Hey! Have you spoken to my buddy the Toilet? Who do you prefer to spend more time with " + name + ", me or him?"],
                 Answers: [{
                     0: ['Of course, you shower!', empty, 0, 0, 0, 0, 1],
@@ -417,7 +420,7 @@ class Questions {
                     questionContent.empty();
                     question.removeClass('door');
                     question.addClass('door2');
-                    askDoor(name);
+                    stelVraag(name);
                     if (transportationVal != undefined) {
                         $('.Guru').attr({
                             "data-environment": environment,
@@ -427,6 +430,7 @@ class Questions {
                             "data-social": social,
                         });
                         $.firstGuru();
+                        $.playSound();
                     }
                 });
                 question.removeClass('door');
@@ -458,7 +462,7 @@ class Questions {
                     questionContent.empty();
                     question.removeClass('door2');
                     question.addClass('door3');
-                    askDoor(name);
+                    stelVraag(name);
                     if (transportationVal != undefined) {
                         $('.Guru').attr({
                             "data-environment": environment,
@@ -468,6 +472,7 @@ class Questions {
                             "data-social": social,
                         });
                         $.updateData();
+                        $.playSound();
                     }
                 });
             } else if (question.hasClass('door3')) {
@@ -498,6 +503,7 @@ class Questions {
                     questionContent.empty();
                     question.hide();
                     question.removeClass('door3');
+                    question.removeClass('begonnen');
                     if (transportationVal != undefined) {
                         $('.Guru').attr({
                             "data-environment": environment,
@@ -507,13 +513,597 @@ class Questions {
                             "data-social": social,
                         });
                         $.updateData();
-                        // question.hide();
+                        $.playSound();
+                        $.Move();
                     }
                 });
+            } else if (question.hasClass('douche')) {
+                const answers = ShowerQuestions.Answers;
+                questionContent.append("<div class='question-title'>" + ShowerQuestions.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='douche-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='douche-1']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('douche');
+                    question.addClass('douche2');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('douche2')) {
+                const answers = ShowerQuestions2.Answers;
+                questionContent.append("<div class='question-title'>" + ShowerQuestions2.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='douche-2' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='douche-2']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('douche2');
+                    question.removeClass('begonnen');
+                    question.hide();
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
+            } else if (question.hasClass('koelkast')) {
+                const answers = RefrigeratorQuestions.Answers;
+                questionContent.append("<div class='question-title'>" + RefrigeratorQuestions.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='koelkast-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='koelkast-1']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('koelkast');
+                    question.addClass('koelkast2');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('koelkast2')) {
+                const answers = RefrigeratorQuestions2.Answers;
+                questionContent.append("<div class='question-title'>" + RefrigeratorQuestions2.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='koelkast-2' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='koelkast-2']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('koelkast2');
+                    question.addClass('koelkast3');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
+            } else if (question.hasClass('koelkast3')) {
+                const answers = RefrigeratorQuestions3.Answers;
+                questionContent.append("<div class='question-title'>" + RefrigeratorQuestions3.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='koelkast-3' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='koelkast-3']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('koelkast3');
+                    question.addClass('koelkast4');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('koelkast4')) {
+            const answers = RefrigeratorQuestions4.Answers;
+            questionContent.append("<div class='question-title'>" + RefrigeratorQuestions4.Question + "</div><div class='answers'></div>");
+            const answersContent = questionContent.find('.answers');
+            $.each(answers, function (i, val) {
+                const answer = $(this)[0][i],
+                    transport = answer[0],
+                    context = answer[1],
+                    environment = answer[2],
+                    health = answer[3],
+                    finance = answer[4],
+                    society = answer[5],
+                    social = answer[6];
+                answersContent.append("<div class='option-" + i + "'><input type='radio' name='koelkast-4' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+            });
+            answersContent.append("<button id='transportation'> > Next Question </button>");
+
+            $('#transportation').click(function () {
+                const transportation = $("input[name='koelkast-4']:checked"),
+                    transportationVal = transportation.val(),
+                    environment = transportation.data("environment"),
+                    health = transportation.data("health"),
+                    finance = transportation.data("finance"),
+                    society = transportation.data("society"),
+                    social = transportation.data("social");
+                questionContent.empty();
+                question.removeClass('koelkast4');
+                question.removeClass('begonnen');
+                question.hide();
+                if (transportationVal != undefined) {
+                    $('.Guru').attr({
+                        "data-environment": environment,
+                        "data-health": health,
+                        "data-finance": finance,
+                        "data-society": society,
+                        "data-social": social,
+                    });
+                    $.updateData();
+                    $.playSound();
+                }
+            });
+            } else if (question.hasClass('telefoon')) {
+                const answers = PhoneQuestions.Answers;
+                questionContent.append("<div class='question-title'>" + PhoneQuestions.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='telefoon-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='telefoon-1']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('telefoon');
+                    question.addClass('telefoon2');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('telefoon2')) {
+                const answers = PhoneQuestions2.Answers;
+                questionContent.append("<div class='question-title'>" + PhoneQuestions2.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='telefoon-2' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='telefoon-2']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('telefoon2');
+                    question.addClass('telefoon3');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
+            } else if (question.hasClass('telefoon3')) {
+                const answers = PhoneQuestions3.Answers;
+                questionContent.append("<div class='question-title'>" + PhoneQuestions3.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='telefoon-3' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='telefoon-3']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('telefoon3');
+                    question.addClass('telefoon4');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('telefoon4')) {
+            const answers = PhoneQuestions4.Answers;
+            questionContent.append("<div class='question-title'>" + PhoneQuestions4.Question + "</div><div class='answers'></div>");
+            const answersContent = questionContent.find('.answers');
+            $.each(answers, function (i, val) {
+                const answer = $(this)[0][i],
+                    transport = answer[0],
+                    context = answer[1],
+                    environment = answer[2],
+                    health = answer[3],
+                    finance = answer[4],
+                    society = answer[5],
+                    social = answer[6];
+                answersContent.append("<div class='option-" + i + "'><input type='radio' name='telefoon-4' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+            });
+            answersContent.append("<button id='transportation'> > Next Question </button>");
+
+            $('#transportation').click(function () {
+                const transportation = $("input[name='telefoon-4']:checked"),
+                    transportationVal = transportation.val(),
+                    environment = transportation.data("environment"),
+                    health = transportation.data("health"),
+                    finance = transportation.data("finance"),
+                    society = transportation.data("society"),
+                    social = transportation.data("social");
+                questionContent.empty();
+                question.removeClass('telefoon4');
+                question.removeClass('begonnen');
+                question.hide();
+                if (transportationVal != undefined) {
+                    $('.Guru').attr({
+                        "data-environment": environment,
+                        "data-health": health,
+                        "data-finance": finance,
+                        "data-society": society,
+                        "data-social": social,
+                    });
+                    $.updateData();
+                    $.playSound();
+                }
+            });
+            } else if (question.hasClass('toilet1')) {
+                const answers = ToiletQuestions.Answers;
+                questionContent.append("<div class='question-title'>" + ToiletQuestions.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='toilet-1' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='toilet-1']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('toilet');
+                    question.addClass('toilet2');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+            } else if (question.hasClass('toilet2')) {
+                const answers = ToiletQuestions2.Answers;
+                questionContent.append("<div class='question-title'>" + ToiletQuestions2.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='toilet-2' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='toilet-2']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('toilet2');
+                    question.addClass('toilet3');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
+            } else if (question.hasClass('toilet3')) {
+                const answers = ToiletQuestions3.Answers;
+                questionContent.append("<div class='question-title'>" + ToiletQuestions3.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='toilet-3' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='toilet-3']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('toilet3');
+                    question.addClass('toilet4');
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
+            } else if (question.hasClass('toilet4')) {
+                const answers = ToiletQuestions4.Answers;
+                questionContent.append("<div class='question-title'>" + ToiletQuestions4.Question + "</div><div class='answers'></div>");
+                const answersContent = questionContent.find('.answers');
+                $.each(answers, function (i, val) {
+                    const answer = $(this)[0][i],
+                        transport = answer[0],
+                        context = answer[1],
+                        environment = answer[2],
+                        health = answer[3],
+                        finance = answer[4],
+                        society = answer[5],
+                        social = answer[6];
+                    answersContent.append("<div class='option-" + i + "'><input type='radio' name='toilet-4' value='" + transport + "' id='" + transport + "' data-environment='" + environment + "' data-health='" + health + "' data-finance='" + finance + "' data-society='" + society + "' data-social='" + social + "'><label for='" + transport + "'>" + transport + "</label></div>");
+                });
+                answersContent.append("<button id='transportation'> > Next Question </button>");
+    
+                $('#transportation').click(function () {
+                    const transportation = $("input[name='toilet-4']:checked"),
+                        transportationVal = transportation.val(),
+                        environment = transportation.data("environment"),
+                        health = transportation.data("health"),
+                        finance = transportation.data("finance"),
+                        society = transportation.data("society"),
+                        social = transportation.data("social");
+                    questionContent.empty();
+                    question.removeClass('toilet4');
+                    question.addClass('begonnen');
+                    question.hide();
+                    stelVraag(name);
+                    if (transportationVal != undefined) {
+                        $('.Guru').attr({
+                            "data-environment": environment,
+                            "data-health": health,
+                            "data-finance": finance,
+                            "data-society": society,
+                            "data-social": social,
+                        });
+                        $.updateData();
+                        $.playSound();
+                    }
+                });
+
             }
-        }
-    }
 }
+    }
+}  
+
+ 
 
 export default(() => {
     $('.question').each(function() {
