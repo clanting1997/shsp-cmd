@@ -42,7 +42,7 @@ class Canvas {
             var array_buffer = null;
 
             camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 2, 1000 );
-            camera.position.set(0, 0, 1000) ;
+            camera.position.set(0, 0, 10) ;
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color( 0xf0f0f0 );
