@@ -95,7 +95,10 @@ class Questions {
                 function savePosition(position) {
                     var latitude = Math.round(position.coords.latitude);
                     var longitude = Math.round(position.coords.longitude);
-                    console.log(latitude + longitude)
+                    $('.Guru').attr({
+                        "data-red": parseInt(((latitude * 255) / 90).toFixed(0)),
+                        "data-blue": parseInt(((longitude * 255) / 180).toFixed(0))
+                    });
                 }
 
                 question.removeClass('AskCity');
@@ -106,6 +109,10 @@ class Questions {
 
             //klik op no way
             $("#geengeo").click(function () {
+                $('.Guru').attr({
+                    "data-red": 0,
+                    "data-blue": 0
+                });
                 question.removeClass('AskCity');
                 question.addClass('AskGender');
                 questionContent.empty();
@@ -149,7 +156,7 @@ class Questions {
                         "data-social": social,
                     });
                     $.firstGuru();
-                    $(".sound").addClass(gender);
+                    $(".sound").addClass(genderVal);
                     Sound();
                     question.removeClass('AskGender');
                     question.addClass('door');
@@ -531,7 +538,6 @@ class Questions {
                         });
                         $.updateData();
                         $.playSound();
-                        $.Move();
                     }
                 });
             }

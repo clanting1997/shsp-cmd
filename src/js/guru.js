@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import {sRGBEncoding} from "three";
 
 class Guru {
     constructor($Guru) {
@@ -24,6 +25,8 @@ class Guru {
         scene.add( guru );
         guru.scale.set(2,2,2);
         guru.material.transparent = true;
+        material.opacity = 0.1;
+
 
         var renderer = new THREE.WebGLRenderer({alpha: true});
         renderer.setSize( Width, Height );
@@ -46,10 +49,11 @@ class Guru {
         $.firstGuru = function () {
             let answer = guruCanvas,
                 environment = answer.data("environment"),
-                health = answer.data("health"),
+                health = 1.2,
                 finance = answer.data("finance"),
                 society = answer.data("society"),
                 social = answer.data("social");
+
 
             _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
 
@@ -64,9 +68,10 @@ class Guru {
             console.log(answerData);
         }
 
-
         $.updateData = function () {
-            let answer = guruCanvas;
+            let answer = guruCanvas,
+                red = answer.data("red"),
+                blue = answer.data("blue");
 
             // migrate old + new data
 
@@ -77,7 +82,7 @@ class Guru {
                 social = parseInt(answer.attr("data-social")) + answerData.social;
 
 
-            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
+            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera, red,  blue);
 
             // update array
 
@@ -106,9 +111,9 @@ class Guru {
     }
 
 
-    updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera)  {
+    updateGuru(answer, environment, health, finance, society, social, guru,  controls, renderer, scene, camera, red, blue)  {
         let guruRotation = environment * 0.01, // environment
-            guruOpacity = guru.material.opacity, // health
+            green = parseInt(((finance * 255) / 6).toFixed(0)), // finance
             guruHeight = guru.scale.y, // society
             guruWidth = guru.scale.x; // social
 
@@ -128,14 +133,22 @@ class Guru {
 
         // health
 
-        guru.material.opacity  = guruOpacity - health * 0.1;
+        guru.material.opacity  = health / 12;
+        console.log(guru.material.opacity);
 
 
-        // finance + society + social
+        // finance + geolocation
+
+        if (red != undefined) {
+            guru.material.color.setRGB(red, green, blue);
+        }
+
+
+        // society + social
 
         guruHeight = guruHeight - society * 0.1;
         guruWidth = guruWidth - social * 0.1;
-        guru.scale.set(guruWidth + finance, guruHeight + finance, guru.scale.z + finance);
+        guru.scale.set(guruWidth, guruHeight, guru.scale.z);
 
         renderer.render(scene, camera);
     }
