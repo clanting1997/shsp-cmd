@@ -42,7 +42,7 @@ class Guru {
             renderer.render( scene, camera );
         }
 
-        var answerData;
+        // var answerData;
 
         $.firstGuru = function () {
             let answer = guruCanvas,
@@ -92,44 +92,6 @@ class Guru {
 
             console.log(answerData);
         }
-
-        $.lastGuru = function() {
-            const answer = guruCanvas;
-
-            // migrate old + new data
-
-            let environment = parseInt(answer.attr('data-environment')) + answerData.environment,
-                health = parseInt(answer.attr("data-health")) + answerData.health,
-                finance = parseInt(answer.attr("data-finance")) + answerData.finance,
-                society = parseInt(answer.attr("data-society")) + answerData.society,
-                social = parseInt(answer.attr("data-social")) + answerData.social;
-
-
-            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
-
-            // update array
-
-            answerData = {
-                'environment': environment,
-                'health': health,
-                'finance': finance,
-                'society': society,
-                'social': social
-            }
-
-            console.log(answerData);
-
-            var DataJSON = JSON.stringify(answerData);
-            $.ajax({
-                type: "POST",
-                url: "data.php",
-                data: {answerData: DataJSON},
-                succes: function() {
-                    console.log('data verstuurd');
-                }
-            });
-        }
-
     }
 
 
