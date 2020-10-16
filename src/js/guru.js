@@ -17,7 +17,7 @@ class Guru {
         var camera = new THREE.PerspectiveCamera( 100, Width / Height, 0.1, 1000 );
 
         var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-
+        geometry.elementsNeedUpdate = true;
 
         var material = new THREE.MeshBasicMaterial( {color: 0x071013} );
         var guru = new THREE.Mesh( geometry, material );
