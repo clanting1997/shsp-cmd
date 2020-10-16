@@ -45,7 +45,7 @@ class Guru {
         var answerData;
 
         $.firstGuru = function () {
-            const answer = guruCanvas,
+            let answer = guruCanvas,
                 environment = answer.data("environment"),
                 health = answer.data("health"),
                 finance = answer.data("finance"),
@@ -62,29 +62,20 @@ class Guru {
                 'society': society,
                 'social':social
             }
-
-            var DataJSON = JSON.stringify(answerData);
-            $.ajax({
-                type: "POST",
-                url: "data.php",
-                data: {answerData: DataJSON},
-                succes: function() {
-                    console.log('data verstuurd');
-                }
-             });
+            console.log(answerData);
         }
 
 
         $.updateData = function () {
-            const answer = guruCanvas;
+            let answer = guruCanvas;
 
             // migrate old + new data
 
-            let environment = answer.data("environment") + answerData.environment,
-                health = answer.data("health") + answerData.health,
-                finance = answer.data("finance") + answerData.finance,
-                society = answer.data("society") + answerData.society,
-                social = answer.data("social") + answerData.social;
+            let environment = parseInt(answer.attr('data-environment')) + answerData.environment,
+                health = parseInt(answer.attr("data-health")) + answerData.health,
+                finance = parseInt(answer.attr("data-finance")) + answerData.finance,
+                society = parseInt(answer.attr("data-society")) + answerData.society,
+                social = parseInt(answer.attr("data-social")) + answerData.social;
 
 
             _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
@@ -100,6 +91,43 @@ class Guru {
             }
 
             console.log(answerData);
+        }
+
+        $.lastGuru = function() {
+            const answer = guruCanvas;
+
+            // migrate old + new data
+
+            let environment = parseInt(answer.attr('data-environment')) + answerData.environment,
+                health = parseInt(answer.attr("data-health")) + answerData.health,
+                finance = parseInt(answer.attr("data-finance")) + answerData.finance,
+                society = parseInt(answer.attr("data-society")) + answerData.society,
+                social = parseInt(answer.attr("data-social")) + answerData.social;
+
+
+            _this.updateGuru(answer, environment,  health, finance, society, social, guru,  controls, renderer, scene, camera);
+
+            // update array
+
+            answerData = {
+                'environment': environment,
+                'health': health,
+                'finance': finance,
+                'society': society,
+                'social': social
+            }
+
+            console.log(answerData);
+
+            var DataJSON = JSON.stringify(answerData);
+            $.ajax({
+                type: "POST",
+                url: "data.php",
+                data: {answerData: DataJSON},
+                succes: function() {
+                    console.log('data verstuurd');
+                }
+            });
         }
 
     }

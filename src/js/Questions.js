@@ -131,9 +131,24 @@ class Questions {
             answersContent.append("<button id='geefgender'> > Next Question </button>");
 
             $("#geefgender").click(function () {
-                var gender = $("input[name='gender-1']:checked").val();
+                // var gender = $("input[name='gender-1']:checked").val();
+                var gender = $("input[name='gender-1']:checked"),
+                    genderVal = gender.val(),
+                    environment = gender.data("environment"),
+                    health = gender.data("health"),
+                    finance = gender.data("finance"),
+                    society = gender.data("society"),
+                    social = gender.data("social");
 
-                if (gender != undefined) {
+                if (genderVal != undefined) {
+                    $('.Guru').attr({
+                        "data-environment": environment,
+                        "data-health": health,
+                        "data-finance": finance,
+                        "data-society": society,
+                        "data-social": social,
+                    });
+                    $.firstGuru();
                     $(".sound").addClass(gender);
                     Sound();
                     question.removeClass('AskGender');
@@ -429,12 +444,13 @@ class Questions {
                             "data-society": society,
                             "data-social": social,
                         });
-                        $.firstGuru();
+                        $.updateData();
                         $.playSound();
                     }
                 });
                 question.removeClass('door');
-            } else if (question.hasClass('door2')) {
+            }
+            else if (question.hasClass('door2')) {
                 const answers = DoorQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -475,7 +491,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('door3')) {
+            }
+            else if (question.hasClass('door3')) {
                 const answers = DoorQuestions3.Answers;
                 questionContent.append("<div class='question-title'>" + DoorQuestions3.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -514,9 +531,11 @@ class Questions {
                         });
                         $.updateData();
                         $.playSound();
+                        $.Move();
                     }
                 });
-            } else if (question.hasClass('douche')) {
+            }
+            else if (question.hasClass('douche')) {
                 const answers = ShowerQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + ShowerQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -557,7 +576,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('douche2')) {
+            }
+            else if (question.hasClass('douche2')) {
                 const answers = ShowerQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + ShowerQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -599,7 +619,8 @@ class Questions {
                     }
                 });
 
-            } else if (question.hasClass('koelkast')) {
+            }
+            else if (question.hasClass('koelkast')) {
                 const answers = RefrigeratorQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + RefrigeratorQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -640,7 +661,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('koelkast2')) {
+            }
+            else if (question.hasClass('koelkast2')) {
                 const answers = RefrigeratorQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + RefrigeratorQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -682,7 +704,8 @@ class Questions {
                     }
                 });
 
-            } else if (question.hasClass('koelkast3')) {
+            }
+            else if (question.hasClass('koelkast3')) {
                 const answers = RefrigeratorQuestions3.Answers;
                 questionContent.append("<div class='question-title'>" + RefrigeratorQuestions3.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -723,7 +746,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('koelkast4')) {
+            }
+            else if (question.hasClass('koelkast4')) {
             const answers = RefrigeratorQuestions4.Answers;
             questionContent.append("<div class='question-title'>" + RefrigeratorQuestions4.Question + "</div><div class='answers'></div>");
             const answersContent = questionContent.find('.answers');
@@ -764,7 +788,8 @@ class Questions {
                     $.playSound();
                 }
             });
-            } else if (question.hasClass('telefoon')) {
+            }
+            else if (question.hasClass('telefoon')) {
                 const answers = PhoneQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + PhoneQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -805,7 +830,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('telefoon2')) {
+            }
+            else if (question.hasClass('telefoon2')) {
                 const answers = PhoneQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + PhoneQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -847,7 +873,8 @@ class Questions {
                     }
                 });
 
-            } else if (question.hasClass('telefoon3')) {
+            }
+            else if (question.hasClass('telefoon3')) {
                 const answers = PhoneQuestions3.Answers;
                 questionContent.append("<div class='question-title'>" + PhoneQuestions3.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -888,7 +915,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('telefoon4')) {
+            }
+            else if (question.hasClass('telefoon4')) {
             const answers = PhoneQuestions4.Answers;
             questionContent.append("<div class='question-title'>" + PhoneQuestions4.Question + "</div><div class='answers'></div>");
             const answersContent = questionContent.find('.answers');
@@ -929,7 +957,8 @@ class Questions {
                     $.playSound();
                 }
             });
-            } else if (question.hasClass('toilet1')) {
+            }
+            else if (question.hasClass('toilet1')) {
                 const answers = ToiletQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + ToiletQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -970,7 +999,8 @@ class Questions {
                         $.playSound();
                     }
                 });
-            } else if (question.hasClass('toilet2')) {
+            }
+            else if (question.hasClass('toilet2')) {
                 const answers = ToiletQuestions2.Answers;
                 questionContent.append("<div class='question-title'>" + ToiletQuestions2.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -1012,7 +1042,8 @@ class Questions {
                     }
                 });
 
-            } else if (question.hasClass('toilet3')) {
+            }
+            else if (question.hasClass('toilet3')) {
                 const answers = ToiletQuestions3.Answers;
                 questionContent.append("<div class='question-title'>" + ToiletQuestions3.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -1054,7 +1085,8 @@ class Questions {
                     }
                 });
 
-            } else if (question.hasClass('toilet4')) {
+            }
+            else if (question.hasClass('toilet4')) {
                 const answers = ToiletQuestions4.Answers;
                 questionContent.append("<div class='question-title'>" + ToiletQuestions4.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -1098,7 +1130,7 @@ class Questions {
                 });
 
             }
-}
+        }
     }
 }  
 
