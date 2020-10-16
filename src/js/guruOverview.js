@@ -20,6 +20,9 @@ class guruOverview {
             renderer = new THREE.WebGLRenderer({alpha: true}),
             controls = new OrbitControls(camera, renderer.domElement );
 
+        let raycaster = new THREE.Raycaster(),
+            mouse = new THREE.Vector2();
+
         controls.update();
 
         scene.background = new THREE.Color( 0xf0f0f0 );
@@ -37,7 +40,7 @@ class guruOverview {
             renderer.render( scene, camera );
         }
 
-        console.log(scene);
+        // this will be database
 
         let gurus = {
             1: [{
@@ -87,7 +90,7 @@ class guruOverview {
             }]
         }
 
-        console.log(gurus);
+        // make a guru out of the database answerData
 
         for (let i in gurus) {
             let guru = gurus[i],
@@ -125,6 +128,30 @@ class guruOverview {
 
             scene.add(guruObject);
         }
+
+
+        // click on gurus
+
+        console.log(mouse);
+
+        let onMouseClick = (event) => {
+            mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+            raycaster.setFromCamera( mouse, camera );
+
+            let intersects = raycaster.intersectObjects(objects, true),
+                rayobject = intersects[0];
+
+            console.log(rayobject.object.name);
+
+        }
+
+        window.addEventListener( 'mousedown', onMouseClick, true);
+
+
+
+
 
     }
 }

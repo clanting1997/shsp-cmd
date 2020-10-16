@@ -71,7 +71,7 @@ class Questions {
         }
 
         function askCity(name) {
-            var AskCity = "You want to enter? No not yet, I have a few more questions.<br> First, tell me where you live. <br> Dit zou een invulveld worden, maar dit is stiekem waardevol";
+            var AskCity = "You want to enter? No not yet, I have a few more questions.<br> First, tell me where you live.";
 
             //voeg vraag toe
             questionContent.append("<div class='question-title'>" + AskCity + "</div><div class='answers'></div>");
