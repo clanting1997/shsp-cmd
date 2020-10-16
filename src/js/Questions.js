@@ -514,7 +514,6 @@ class Questions {
                         });
                         $.updateData();
                         $.playSound();
-                        $.Move();
                     }
                 });
             } else if (question.hasClass('douche')) {
