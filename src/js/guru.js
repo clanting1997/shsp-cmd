@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import Questions from "./Questions";
 
 class Guru {
     constructor($Guru) {
@@ -42,7 +41,7 @@ class Guru {
             renderer.render( scene, camera );
         }
 
-        // var answerData;
+        var answerData;
 
         $.firstGuru = function () {
             let answer = guruCanvas,
@@ -91,6 +90,18 @@ class Guru {
             }
 
             console.log(answerData);
+        }
+
+        $.lastGuru = function () {
+            var DataJSON = JSON.stringify(answerData);
+            $.ajax({
+                type: "POST",
+                url: "data.php",
+                data: {answerData: DataJSON},
+                succes: function() {
+                    console.log('data verstuurd');
+                }
+            });
         }
     }
 

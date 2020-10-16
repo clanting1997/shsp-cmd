@@ -24,17 +24,7 @@ class StartScreen {
             startScreen.show();
 
             startScreenWrapper.on('click', function () {
-                console.log(answerData);
-
-                var DataJSON = JSON.stringify(answerData);
-                $.ajax({
-                    type: "POST",
-                    url: "data.php",
-                    data: {answerData: DataJSON},
-                    succes: function() {
-                        console.log('data verstuurd');
-                    }
-                });
+                $.lastGuru();
             })
         }
     }
