@@ -253,6 +253,8 @@ function ( error ) {
                     Questions();
                     //laat de vragen zien
                     question.show();
+
+                    camera.position.set(0, 0, 100) ;
                 } else if (rayobject.object.name.includes("douche")) {
                     question.addClass('douche');
                     question.addClass('begonnen');

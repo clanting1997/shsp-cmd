@@ -10,7 +10,6 @@ import Sound from './js/Sound';
 
 // globals
 window.$ = window.jQuery = $;
-var answerData;
 
 $(function() {
     StartScreen();
