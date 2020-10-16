@@ -22,7 +22,7 @@ class Sound {
 listener() {
     var Sounds = [];
     //begin achtergrond muziek
-    $('.start-screen-content').click(function () {
+    $('.start-screen-wrapper').click(function () {
     var audioAchtergrond = document.createElement('audio');
     audioAchtergrond.setAttribute('src', Achtergrond)
     audioAchtergrond.play();
