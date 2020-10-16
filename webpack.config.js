@@ -104,7 +104,12 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/index.html",
-            filename: "./index.html"
+            filename: "./index.html",
+        }),
+
+        new HtmlWebPackPlugin({
+            template: "./src/guru-overview.html",
+            filename: "./guru-overview.html",
         }),
 
         new MiniCssExtractPlugin({

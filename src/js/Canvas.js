@@ -218,7 +218,7 @@ function ( error ) {
         canvas[0].appendChild( renderer.domElement );
 
         stats = new Stats();
-        document.body.appendChild( stats.dom );
+        // document.body.appendChild( stats.dom );
 
         document.body.addEventListener( 'pointermove', onPointerMove, false );
         document.addEventListener( 'mousemove', onDocumentMouseMove, false );

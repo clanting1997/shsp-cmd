@@ -30,6 +30,7 @@ class Guru {
 
         var renderer = new THREE.WebGLRenderer({alpha: true});
         renderer.setSize( Width, Height );
+        renderer.shadowMap.enabled = true;
         guruCanvas[0].appendChild( renderer.domElement );
         //renderer.setClearColor (0xffffff, 1);
 
@@ -49,7 +50,7 @@ class Guru {
         $.firstGuru = function () {
             let answer = guruCanvas,
                 environment = answer.data("environment"),
-                health = 1.2,
+                health = answer.data("health"),
                 finance = answer.data("finance"),
                 society = answer.data("society"),
                 social = answer.data("social");
@@ -91,10 +92,16 @@ class Guru {
                 'health': health,
                 'finance': finance,
                 'society': society,
-                'social': social
+                'height': guru.scale.y,
+                'social': social,
+                'width': guru.scale.x,
+                'blue': blue,
+                'red': red
             }
 
             console.log(answerData);
+            console.log('joehoeee');
+            console.log(guru);
         }
 
         $.lastGuru = function () {
@@ -134,7 +141,6 @@ class Guru {
         // health
 
         guru.material.opacity  = health / 12;
-        console.log(guru.material.opacity);
 
 
         // finance + geolocation

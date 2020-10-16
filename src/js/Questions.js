@@ -18,9 +18,9 @@ class Questions {
         var GenderQuestion = {
             Question: "Wait... wait, just one more question! I almost forgot, but please tell me, are you, or do feel you more...",
             Answers: [{
-                0: ['Male', 'empty', 0, 0, 0, 1, 0],
+                0: ['Male', 'empty', 0, 1.2, 0, 1, 0],
             }, {
-                1: ['Female', 'empty', 0, 0, 0, 1, 0],
+                1: ['Female', 'empty', 0, 1.2, 0, 1, 0],
             }]
         }
 
