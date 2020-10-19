@@ -56,6 +56,7 @@ class Questions {
                                 question.addClass('AskCity');
                                 questionContent.empty();
                                 askCity(name);
+                                $('.Guru').attr('data-name', name);
                             });
                         });
                     } else {
@@ -168,6 +169,8 @@ class Questions {
 
         //Milieu - gezondheid - financien-maatschappelijk - sociaal
         function stelVraag(name) {
+            name = $('.Guru').data('name');
+
             //maak een array aan met de vraag
             var DoorQuestions = {
                 //Milieu - Gezondheid - Fininancien - Maatschappelijk - Sociaal
