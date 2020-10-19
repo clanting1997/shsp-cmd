@@ -102,9 +102,7 @@ class Guru {
                 'sound': SoundData
             }
 
-            //console.log(answerData);
-            //console.log('joehoeee');
-            //console.log(guru);
+            console.log(answerData);
         }
 
         $.lastGuru = function () {
@@ -150,7 +148,8 @@ class Guru {
         // finance + geolocation
 
         if (red != undefined) {
-            guru.material.color.setRGB(red, green, blue);
+            let color = new THREE.Color("rgb(" + red + "," + green + "," + blue + ")");
+            guru.material.color = color;
         }
 
 
