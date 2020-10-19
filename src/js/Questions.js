@@ -13,7 +13,7 @@ class Questions {
     listener() {
         const question = this.$Questions,
             questionContent = this.$QuestionsContent;
-        var name = this.$name;
+        var name;
         var empty = "empty";
         var GenderQuestion = {
             Question: "Wait... wait, just one more question! I almost forgot, but please tell me, are you, or do feel you more...",
