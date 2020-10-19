@@ -25,6 +25,7 @@ class StartScreen {
 
             startScreenWrapper.on('click', function () {
                 $.lastGuru();
+                location.href='/guru-overview.html';
             })
         }
     }
