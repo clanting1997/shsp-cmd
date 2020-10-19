@@ -61,6 +61,7 @@ class Questions {
                         });
                     } else {
                         // Guru();
+                        $('.Guru').attr('data-name', name);
                         console.log(name);
                         question.removeClass('AskName');
                         question.addClass('AskCity');
