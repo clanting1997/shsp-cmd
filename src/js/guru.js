@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {sRGBEncoding} from "three";
+import Sound from "././Sound";
 
 class Guru {
     constructor($Guru) {
@@ -9,8 +10,9 @@ class Guru {
     }
 
     listener() {
+        console.log(SoundData)
         const _this = this,
-            guruCanvas = this.$Guru;
+        guruCanvas = this.$Guru;
         var Height = window.innerHeight/5;
         var Width = window.innerWidth/5;
 
@@ -96,16 +98,18 @@ class Guru {
                 'social': social,
                 'width': guru.scale.x,
                 'blue': blue,
-                'red': red
+                'red': red,
+                'sound': SoundData
             }
 
-            console.log(answerData);
-            console.log('joehoeee');
-            console.log(guru);
+            //console.log(answerData);
+            //console.log('joehoeee');
+            //console.log(guru);
         }
 
         $.lastGuru = function () {
             var DataJSON = JSON.stringify(answerData);
+            var SoundJSON = JSON.stringify(SoundData);
             $.ajax({
                 type: "POST",
                 url: "data.php",

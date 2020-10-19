@@ -357,7 +357,7 @@ class Questions {
             };
 
             var ToiletQuestions2 = {
-                Question: ["TOILET: You know, if you like I could analyse your pee and tell you how healthy you are, would you like that?"],
+                Question: ["You know, if you like I could analyse your pee and tell you how healthy you are, would you like that?"],
                 Answers: [{
                     0: ['Yes', empty, 0, 1, 0, 0, 0],
                 }, {
@@ -964,7 +964,7 @@ class Questions {
                 }
             });
             }
-            else if (question.hasClass('toilet1')) {
+            else if (question.hasClass('toilet')) {
                 const answers = ToiletQuestions.Answers;
                 questionContent.append("<div class='question-title'>" + ToiletQuestions.Question + "</div><div class='answers'></div>");
                 const answersContent = questionContent.find('.answers');
@@ -1119,7 +1119,7 @@ class Questions {
                         social = transportation.data("social");
                     questionContent.empty();
                     question.removeClass('toilet4');
-                    question.addClass('begonnen');
+                    question.removeClass('begonnen');
                     question.hide();
                     stelVraag(name);
                     if (transportationVal != undefined) {

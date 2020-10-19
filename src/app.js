@@ -15,7 +15,7 @@ window.$ = window.jQuery = $;
 $(function() {
     StartScreen();
     Canvas();
-    Guru();
     Sound();
+    Guru();
     guruOverview();
 });

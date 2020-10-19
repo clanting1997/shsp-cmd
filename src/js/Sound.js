@@ -21,6 +21,8 @@ class Sound {
 
 listener() {
     var Sounds = [];
+    var value;
+    global.SoundData = [];
     //begin achtergrond muziek
     $('.start-screen-wrapper').click(function () {
     var audioAchtergrond = document.createElement('audio');
@@ -37,29 +39,28 @@ listener() {
         console.log('vrouwelijke sounds');
     }
 
-    var value;
-
     $.playSound = function() {
         // vind de data
-        const answer = $(".Guru"),
-            finance = answer.data("finance"), //A
-            society = answer.data("society"), //C
-            health = answer.data("health"), //E
-            environment = answer.data("environment"), //G
-            social = answer.data("social"); //B
+        var answer = $(".Guru"),
+        environment = parseInt(answer.attr('data-environment')), 
+        health = parseInt(answer.attr("data-health")), 
+        finance = parseInt(answer.attr("data-finance")), 
+        society = parseInt(answer.attr("data-society")),
+        social = parseInt(answer.attr("data-social"));
         value = [finance,society,health,environment,social]; 
 
         value.forEach(PakMuziek);
-
         function PakMuziek(item, index){
-            if (item = 1) {
+            if (item !== 0) {
                 var selectIndex = index;
                 var AudioElement = document.createElement('audio');
                 AudioElement.setAttribute('src', Sounds[selectIndex]);
                 AudioElement.play();
+                SoundData.push(Sounds[selectIndex]);
             }
             }
         }
+
     }
 }   
 

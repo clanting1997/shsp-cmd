@@ -10,7 +10,7 @@ class guruOverview {
     }
 
     listener() {
-        const _this = this,
+           const _this = this,
             guruOverview = this.$guruOverview,
             height = window.innerHeight,
             width = window.innerWidth,
@@ -21,6 +21,7 @@ class guruOverview {
             controls = new OrbitControls(camera, renderer.domElement );
 
         let raycaster = new THREE.Raycaster(),
+            dataGuru,
             mouse = new THREE.Vector2();
 
         controls.update();
@@ -41,6 +42,15 @@ class guruOverview {
         }
 
         // this will be database
+        var oReq = new XMLHttpRequest(); // New request object
+        oReq.onload = function() {
+            console.log('dataguru komt nu:')
+            console.log(this.responseText);
+            var pap = JSON.parse(this.responseText)
+            console.log(pap)
+        };
+        oReq.open("get", "dataWrite.php", true);
+        oReq.send();
 
         let gurus = {
             1: [{
