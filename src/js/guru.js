@@ -113,7 +113,7 @@ class Guru {
                 url: "data.php",
                 data: {answerData: DataJSON},
                 succes: function() {
-                    console.log('data verstuurd');
+                    window.location.href='https://www.guru-shsp.com/landscape';
                 }
             });
         }

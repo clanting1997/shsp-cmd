@@ -215,8 +215,8 @@ function ( error ) {
                     //beweeg camera
                     camera.position.z = 500;
                     //haal object
-                    objects[0].position.z = 10000;
-                    scene.remove(objects[0]);
+                    intersects[0].object.parent.position.z = 10000;
+                    scene.remove(intersects[0]);
                     counter += 1;
                 } else if (rayobject.object.name.includes("douche")) {
                     question.addClass('douche');
@@ -224,8 +224,8 @@ function ( error ) {
                     question.addClass('passedStart');
                     Questions();
                     question.show();
-                    objects[1].position.z = 10000;
-                    scene.remove(objects[1]);
+                    intersects[0].object.parent.position.z = 10000;
+                    scene.remove(intersects[0]);
                     counter += 1;
                 } else if (rayobject.object.name.includes("koelkast")) {
                     question.addClass('koelkast');
@@ -233,8 +233,8 @@ function ( error ) {
                     question.addClass('passedStart');
                     Questions();
                     question.show();
-                    objects[2].position.z = 10000;
-                    scene.remove(objects[2]);
+                    intersects[0].object.parent.position.z = 10000;
+                    scene.remove(intersects[0]);
                     counter += 1;
                 } else if (rayobject.object.name.includes("telefoon")) {
                     question.addClass('telefoon');
@@ -242,8 +242,8 @@ function ( error ) {
                     question.addClass('passedStart');
                     Questions();
                     question.show();
-                    objects[3].position.z = 10000;
-                    scene.remove(objects[3]);
+                    intersects[0].object.parent.position.z = 10000;
+                    scene.remove(intersects[0]);
                     counter += 1;
                 } else if (rayobject.object.name.includes("toilet")) {
                     question.addClass('toilet');
@@ -251,8 +251,8 @@ function ( error ) {
                     question.addClass('passedStart');
                     Questions();
                     question.show();
-                    objects[4].position.z = 10000;
-                    scene.remove(objects[4]);
+                    intersects[0].object.parent.position.z = 10000;
+                    scene.remove(intersects[0]);
                     counter += 1;
                 }
             }

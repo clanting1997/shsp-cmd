@@ -3,7 +3,6 @@ class StartScreen {
         this.$startScreen = $StartScreen;
         this.$startScreenWrapper = this.$startScreen.find('.start-screen-wrapper');
         this.$startScreenText = this.$startScreenWrapper.find('h1');
-
         this.listener();
     }
 
@@ -25,7 +24,7 @@ class StartScreen {
 
             startScreenWrapper.on('click', function () {
                 $.lastGuru();
-                location.href='/guru-overview.html';
+                window.location.href='https://www.guru-shsp.com/landscape';
             })
         }
     }

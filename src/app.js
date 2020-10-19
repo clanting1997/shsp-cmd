@@ -8,6 +8,7 @@ import Canvas from "./js/Canvas";
 import Guru from "./js/guru";
 import Sound from './js/Sound';
 import guruOverview from "./js/guruOverview";
+import infoButton from './js/infoButton';
 
 // globals
 window.$ = window.jQuery = $;
@@ -18,4 +19,5 @@ $(function() {
     Sound();
     Guru();
     guruOverview();
+    infoButton();
 });
