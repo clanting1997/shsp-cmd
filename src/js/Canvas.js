@@ -318,6 +318,14 @@ function ( error ) {
             if (!$(question).hasClass("begonnen")){
             $.finishScreen();
             counter += 1;
+
+            SoundData.forEach((item, i) => {
+                setTimeout(function () {
+                    var AudioElement = document.createElement('audio');
+                    AudioElement.setAttribute('src', item);
+                    AudioElement.play();
+                    }, i * 200);
+                })
     }}
     }
     function animate() {

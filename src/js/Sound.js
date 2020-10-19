@@ -23,12 +23,17 @@ listener() {
     var Sounds = [];
     var value;
     global.SoundData = [];
+    var audioAchtergrond = document.createElement('audio');
     //begin achtergrond muziek
     $('.start-screen-wrapper').click(function () {
-    var audioAchtergrond = document.createElement('audio');
     audioAchtergrond.setAttribute('src', Achtergrond)
     audioAchtergrond.play();
     });
+
+    audioAchtergrond.addEventListener('ended', function() {
+        audioAchtergrond.currentTime = 0
+        audioAchtergrond.play();
+    }, false)
 
     // check of de persoon man/vrouw is
     if ($(".sound").hasClass('Male')){
