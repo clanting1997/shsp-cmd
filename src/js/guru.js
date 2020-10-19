@@ -121,7 +121,7 @@ class Guru {
 
 
     updateGuru(answer, environment, health, finance, society, social, guru,  controls, renderer, scene, camera, red, blue)  {
-        let guruRotation = environment * 0.01, // environment
+        let guruRotation = environment * 0.001, // environment
             green = parseInt(((finance * 255) / 6).toFixed(0)), // finance
             guruHeight = guru.scale.y, // society
             guruWidth = guru.scale.x; // social
