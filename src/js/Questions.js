@@ -278,7 +278,7 @@ class Questions {
             };
 
             var PhoneQuestions = {
-                Question: ["Thanks " + name + " for picking me up.  So happy you want to talk with me! You know you can do a lot more with me than just talk. Ah, " + name + " of course, you already knew that. On your own phone, which social media do you use? Please tell me all!"],
+                Question: ["Thanks " + name + " for picking me up.  So happy you want to talk with me! You know you can do a lot more with me than just talk. Ah, " + name + " of course, you already knew that. On your own phone, which social media do you use most? Please tell me!"],
                 Answers: [{
                     0: ['Instagram', "Yes, yes. Thank you, and good luck!", 0, 1, 0, 1, 1],
                 }, {

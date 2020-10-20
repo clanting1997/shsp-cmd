@@ -4,7 +4,7 @@ body {
   height: 100vh;
   font-family: $BeausiteClassic;
   font-size: 1.0rem;
-  line-height: 2;
+  line-height: 1;
   overflow: hidden;
   width: 100vw;
 
@@ -13,7 +13,7 @@ body {
   }
 
   @media($xl) {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
   }
 }
 
@@ -30,6 +30,8 @@ input[type="button"], input[type="submit"], button {
   border: none;
   color: $white;
   margin: 20px;
+  padding: 5px;
+
   padding-left: 30px;
   padding-right: 30px;
   text-transform: lowercase;
@@ -37,6 +39,7 @@ input[type="button"], input[type="submit"], button {
 
 input[type="text"], label {
   background: $yellow;
+  padding: 7.5px;
 }
 
 input[type="text"] {
@@ -44,7 +47,7 @@ input[type="text"] {
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
-
+  padding: 15px;
   &:focus {
     border: none;
   }

@@ -202,9 +202,11 @@ function ( error ) {
 
             //zet de intersects neer in rayobject
             var rayobject = intersects[0];
+
            //check of hij ooit al een formulier gegeven heeft
            if (!$(question).hasClass("begonnen")){
                 if (rayobject.object.name.includes("deur")) {
+                    
                     //voeg class toe die aangeeft dat we begonnen zijn
                     question.addClass('begonnen');
                     canvas.addClass('rotate');

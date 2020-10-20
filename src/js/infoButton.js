@@ -14,7 +14,7 @@ class infoButton {
             buttonText.text('What is this?');
 
         buttonInfoWrapper.on('click', function () {
-            location.href="https://www.guru-shsp.com/what-is-this"
+            top.location.href="https://www.guru-shsp.com/what-is-this"
         })
 
     }

@@ -24,7 +24,7 @@ class StartScreen {
 
             startScreenWrapper.on('click', function () {
                 $.lastGuru();
-                window.location.href='https://www.guru-shsp.com/landscape';
+                window.location.href='https://www.guru-shsp.com/dev/guru-overview.html';
             })
         }
     }

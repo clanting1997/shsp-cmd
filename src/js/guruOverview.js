@@ -20,8 +20,8 @@ class guruOverview {
             height = window.innerHeight,
             width = window.innerWidth,
             scene =  new THREE.Scene(),
-            camera = new THREE.PerspectiveCamera( 100, width / height, 2, 1000 ),
-            light = new THREE.DirectionalLight( 0xffffff, 0.35 ),
+            camera = new THREE.PerspectiveCamera( 60, width / height, 2, 1000 ),
+            light = new THREE.PointLight( 0xffffff, 1 ),
             renderer = new THREE.WebGLRenderer({alpha: true}),
             controls = new OrbitControls(camera, renderer.domElement );
             var AudioElement = document.createElement('audio');
@@ -31,11 +31,11 @@ class guruOverview {
         var mouseX, MouseY, enableclick, Geluid;
         var sceneGurus = []
         controls.update();
-
+        light.shadow.camera.far = 1000;
         scene.background = new THREE.Color( 0xf0f0f0 );
-        camera.position.set(0, 0, 250);
+        camera.position.set(0, 0, 200);
         light.position.set( 1, 1, 1 ).normalize();
-        scene.add(new THREE.AmbientLight(0xffffff, 1.0)).add(light);
+        //scene.add(new THREE.AmbientLight(0xffffff, 0.2)).add(light);
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize(width, height);
 
@@ -168,6 +168,108 @@ class guruOverview {
             }, {
                 'sound': ["builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/CV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/AV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3"]
             }],
+            6: [{
+                'environment': 8,
+            }, {
+                'health': 11.2,
+            }, {
+                'finance': 6,
+            }, {
+                'height': -1,
+            }, {
+                'width': -1.2,
+            }, {
+                'blue': 0,
+            }, {
+                'red': 0,
+            }, {
+                'sound': ["builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/BM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/CM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/AM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/AM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3"]
+            }],
+            7: [{
+                'environment': 8,
+            }, {
+                'health': 11.2,
+            }, {
+                'finance': 4,
+            }, {
+                'height': -2,
+            }, {
+                'width': -3.4,
+            }, {
+                'blue': 180,
+            }, {
+                'red': 0,
+            }, {
+                'sound': ["builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/BM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/BM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/CM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/GM.mp3"]
+            }],
+            8: [{
+                'environment': 8,
+            }, {
+                'health': 11.2,
+            }, {
+                'finance': 5,
+            }, {
+                'height': -1.4,
+            }, {
+                'width': -1.6,
+            }, {
+                'blue': 0,
+            }, {
+                'red': 0,
+            }, {
+                'sound': ["builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/BM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/CM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3","builders/sound/AM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/BM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/CM.mp3","builders/sound/GM.mp3","builders/sound/AM.mp3","builders/sound/EM.mp3"]
+            }],
+            9: [{
+                'environment': 8,
+            }, {
+                'health': 12.2,
+            }, {
+                'finance': 5,
+            }, {
+                'height': -1.2,
+            }, {
+                'width': -1.8,
+            }, {
+                'blue': 255,
+            }, {
+                'red': 145,
+            }, {
+                'sound': ["builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/BV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/CV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/AV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/BV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3"]
+            }],
+            10: [{
+                'environment': 8,
+            }, {
+                'health': 12.2,
+            }, {
+                'finance': 5,
+            }, {
+                'height': -1.2,
+            }, {
+                'width': -1.8,
+            }, {
+                'blue': 6,
+            }, {
+                'red': 145,
+            }, {
+                'sound': ["builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/BV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/CV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/AV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/BV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3"]
+            }],
+            11: [{
+                'environment': 8,
+            }, {
+                'health': 10.2,
+            }, {
+                'finance': 5,
+            }, {
+                'height': -.6,
+            }, {
+                'width': -1.8,
+            }, {
+                'blue': 140,
+            }, {
+                'red': 145,
+            }, {
+                'sound': ["builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/EV.mp3","builders/sound/BV.mp3","builders/sound/CV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/GV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/CV.mp3","builders/sound/CV.mp3","builders/sound/AV.mp3","builders/sound/EV.mp3","builders/sound/AV.mp3","builders/sound/CV.mp3"]
+            }],
         }
 
         // make a guru out of the database answerData
@@ -187,7 +289,6 @@ class guruOverview {
                 material = new THREE.MeshBasicMaterial( {color: 'rgb(' + red + ',' + green + ',' + blue + ')'} ),
                 guruObject = new THREE.Mesh(geometry,material);
                 geometry.elementsNeedUpdate = true;
-
             guruRotate();
             function guruRotate() {
                 requestAnimationFrame(guruRotate);
@@ -201,9 +302,9 @@ class guruOverview {
 
             guruObject.scale.set(width,height,2);
 
-            guruObject.position.x = Math.floor(Math.random() * 400);
-            guruObject.position.y = Math.floor(Math.random() * 400);
-            guruObject.position.z = Math.floor(Math.random() * 400);
+            guruObject.position.x = 50 + (Math.floor( Math.random() * 400));
+            guruObject.position.y = 200 - (Math.floor(Math.random() * 300));
+            guruObject.position.z = 40 + Math.floor(- Math.random() * 300);
             guruObject.userData = {Sound: guru[7]};
             scene.add(guruObject);
             sceneGurus.push(guruObject);
@@ -239,7 +340,7 @@ class guruOverview {
         }
         
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.1;
+        controls.autoRotateSpeed = 0.03;
         window.addEventListener( 'mousedown', onMouseClick, true);
         window.addEventListener( 'resize', onWindowResize, false );
 

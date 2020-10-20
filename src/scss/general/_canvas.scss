@@ -11,6 +11,8 @@
     height: 80vh;
     padding-top: 20vh;
     width: 100%;
+    line-height: 1;
+
 
     .question-background, .question-content {
       position: fixed;
@@ -25,13 +27,17 @@
 
     .question-content {
       height: 80vh;
-      line-height: 3;
+      line-height: 2;
       overflow: scroll;
       padding-bottom: 20vh;
-      padding-left: 100px;
-      padding-right: 100px;
+      padding-left: 20vw;
+      padding-right: 20vw;
       text-align: center;
       z-index: 2;
+
+      .question-title {
+        padding-bottom: 20px;
+      }
     }
   }
 }
